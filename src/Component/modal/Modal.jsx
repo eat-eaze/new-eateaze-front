@@ -1,7 +1,7 @@
-// import logo from './logo.svg';
-// import './App.css';
-import "../../style/component/modal/modal.css";
-import logo from "../../logo.svg";
+// import "../../style/component/modal/modal.css";
+// change le chemin de l'importation du css
+
+import logo from "../../assets/logo.svg";
 import InputLabel from "../input/InputLabel";
 
 function Modal() {

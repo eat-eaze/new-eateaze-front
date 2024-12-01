@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 import "../style/page/login.css";
 import Modal from "../Component/modal/Modal";
 

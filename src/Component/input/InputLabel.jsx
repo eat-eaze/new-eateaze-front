@@ -1,7 +1,4 @@
-// import logo from './logo.svg';
-// import './App.css';
 import "../../style/component/input/inputLabel.css";
-import logo from "../../logo.svg";
 
 function InputLabel() {
     return (
