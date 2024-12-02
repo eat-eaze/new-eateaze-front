@@ -1,6 +1,5 @@
-// import "../../style/component/modal/modal.css";
-// change le chemin de l'importation du css
-import "../../style/component/modal/modal.css";
+// import "../../style/component/modal/modal.scss";
+import "../../style/component/modal/modal.scss";
 import logo from "../../assets/logo.svg";
 import InputLabel from "../input/InputLabel";
 

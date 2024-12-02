@@ -1,4 +1,4 @@
-import "../../style/component/input/inputLabel.css";
+import "../../style/component/input/inputLabel.scss";
 
 function InputLabel() {
     return (
