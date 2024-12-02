@@ -1,4 +1,4 @@
-import "../style/page/login.css";
+import "../style/page/login.scss";
 import Modal from "../Component/modal/Modal";
 
 function Login() {
