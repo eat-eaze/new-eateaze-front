@@ -1,12 +1,12 @@
 import "../style/page/login.css";
-import Modal from "../Component/modal/Modal";
+import ModalFormLogin from "../Component/login/ModalFormLogin";
 
 function Login() {
     return (
         <>
             <div id="backgroundLogin"/>
             <div id="div__containerLogin">
-                <Modal />
+                <ModalFormLogin />
             </div>
         </>
     );
