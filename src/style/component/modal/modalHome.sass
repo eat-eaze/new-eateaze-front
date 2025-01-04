@@ -1,0 +1,64 @@
+@import '../../colors'
+
+#divModal__center
+    position: fixed
+    z-index: 1
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    color : $primary__text
+
+    #divModal__bigContainer
+
+        width: 1200px
+        //max-width: 400px
+        height: auto
+        min-height: 500px
+        padding: 20px
+        position: relative
+        background: $primary__background
+        border-radius: 10px
+
+        display: flex
+        align-items: center
+        flex-direction: column
+
+        #divModal__logo
+            width: 150px
+            height: auto
+            img
+                width: 150px
+                height: auto
+                border-radius: 10px
+
+
+        #divModal__textarea
+            font-size: 20px
+            text-align: center
+            padding: 10px
+            gap: 15px
+            h1
+                color: $primary__text
+                font-size: 1.5rem
+            h2
+                color: $primary__text
+                font-size: 1.1rem
+
+        #paragraph__textparam
+            font-size: 1rem
+            color: $primary__text
+            margin: 10px
+            text-align: center
+            a
+                color: $primary__text
+                text-decoration: underline
+        #Modal__login
+            height: 100% // faudrais faire un calc(calculer les truc du dessus)
+            width: 100%
+            display: flex
+            justify-content: center
+            align-items: center
+
+

@@ -4,11 +4,22 @@ import Home from "../page/Home";
 import NotFound from "../page/NotFound";
 import Login from "../page/Login";
 import Register from "../page/Register";
+import HomeProductor from "../page/HomeProductor";
 
 function MainRouter() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={
+                    <>
+                        <Home/>
+                    </>
+                }/>
+                <Route path="/productor" element={
+                    <>
+                        <HomeProductor/>
+                    </>
+                }/>
                 <Route path="/" element={
                     <>
                         <Home/>
