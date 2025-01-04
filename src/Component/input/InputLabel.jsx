@@ -4,11 +4,11 @@ import { useEffect } from "react";
 function InputLabel({
                         labelText= "tu as oublier de mettre un label ...",
                         placeHolder="Tu as oublier de holder",
-                        id,
+                        id = "id-oublie",
                         type="text",
                         valueInput,
                         setValueInput,
-                        size="L"
+                        // size="L"
                     }) {
     useEffect(() => {
         if (valueInput === undefined || setValueInput === undefined) {
@@ -24,7 +24,7 @@ function InputLabel({
         <>
             <div className="divinputLabel__container divinputLabel__container_L">
                 <label htmlFor="input" className="divinputLabel__label">{labelText}</label>
-                <input type={type} id="input" className="divinputLabel__input" placeholder={placeHolder} name="input" value={valueInput} onChange={handleChange} />
+                <input type={type} id={id}  className="divinputLabel__input" placeholder={placeHolder} name="input" value={valueInput} onChange={handleChange} />
             </div>
         </>
     );

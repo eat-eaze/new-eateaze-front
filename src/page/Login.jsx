@@ -1,12 +1,13 @@
-import "../style/page/login.css";
-import ModalFormLogin from "../Component/login/ModalFormLogin";
+import "../style/page/login.sass";
+import ModalFormLogin from "../Component/modal/ModalFormLogin";
 
 function Login() {
     return (
         <>
-            <div id="backgroundLogin"/>
-            <div id="div__containerLogin">
-                <ModalFormLogin />
+            <div id="backgroundLogin">
+               <div id="div__containerLogin">
+                    <ModalFormLogin />
+                </div>
             </div>
         </>
     );

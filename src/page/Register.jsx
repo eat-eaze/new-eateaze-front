@@ -1,16 +1,17 @@
 // import "../style/page/register.css";
 // change path of css and right css file
 
-import Modal from "../Component/modal/Modal";
+import ModalFormRegister from "../Component/modal/ModalFormRegister";
 
 function Register() {
+
+
     return (
         <>
-            <p>JENREGISTRE</p>
-             {/*classe pas encore créer */}
-            <div id="backgroundRegister"/>
-            <div id="div__containerRegister">
-                <Modal />
+            <div id="backgroundLogin">
+                <div id="div__containerLogin">
+                    <ModalFormRegister/>
+                </div>
             </div>
         </>
     );

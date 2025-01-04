@@ -1,9 +1,10 @@
-import "../../style/component/modal/modal.sass";
-import logo from "../../assets/logo.svg";
+import "../../style/component/modal/modalLogin.sass";
+import logo from "../../assets/logo/tous_a_la_ferme_logo_fond_blanc.png";
 import InputLabel from "../input/InputLabel";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function ModalForm() {
+function ModalFormLogin() {
     const [emailInput,setEmailInput] = useState("");
     const [passwordInput,setPasswordInput] = useState("");
 
@@ -15,16 +16,23 @@ function ModalForm() {
         <>
             <div id="divModal__center">
                 <div id="divModal__container">
-                    <img src={logo} alt="" id="divModal__logo"/>
+                    <div id="divModal__logo">
+                        <img src={logo} alt=""/>
+                    </div>
+                    <div id="div__textarea">
+                        <h1 id="welcome">Ravi de vous revoir !</h1>
+                        <h2 id="instruction">Veuillez entrer vos informations pour vous connecter.</h2>
+                    </div>
                     <form method="post" id="formModal__login">
                         <InputLabel labelText={"Email"} placeHolder={"Email@TousALaFerme.com"} id={"emailInput"} valueInput={emailInput} setValueInput={setEmailInput} type={"email"} />
                         <InputLabel labelText={"mot de passe"} placeHolder={"Password"} id={"password"} valueInput={passwordInput} setValueInput={setPasswordInput} type={"password"} />
                     </form>
-                    <p>Boutton de Josué</p>
+                    <Link to={"/register"} id="link__register">Pas encore de compte ? Inscrivez-vous</Link>
+                    <p>Boutton de Josué avec lien en dessous</p>
                 </div>
             </div>
         </>
     );
 }
 
-export default ModalForm;
+export default ModalFormLogin;
