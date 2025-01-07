@@ -1,0 +1,33 @@
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button--primary {
+  background-color: #4CAF50;
+}
+.button--primary:hover {
+  filter: brightness(1.1);
+}
+.button--secondary {
+  background-color: #FFA500;
+}
+.button--secondary:hover {
+  filter: brightness(1.1);
+}
+.button--cta {
+  background: linear-gradient(to bottom right, #4CAF50, #FFA500);
+}
+.button--cta:hover {
+  filter: brightness(1.1);
+}
+
+/*# sourceMappingURL=button.css.map */

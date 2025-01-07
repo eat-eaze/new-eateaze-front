@@ -1,0 +1,28 @@
+$modal-background: #cacaca;
+$modal-border-radius: 10px;
+
+#divModal__center {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #divModal__container {
+        width: 400px;
+        height: 600px;
+        position: relative;
+        background: $modal-background;
+        border-radius: $modal-border-radius;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        #divModal__logo {
+            width: 250px;
+            height: auto;
+        }
+    }
+}
