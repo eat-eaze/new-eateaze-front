@@ -3,8 +3,10 @@ import MainRouter from "./router/MainRouter";
 
 function App() {
   return (
-      <MainRouter />
-  );
+      <>
+        <MainRouter />
+      </>
+        );
 }
 
 export default App;

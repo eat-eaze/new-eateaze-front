@@ -1,11 +1,11 @@
 import "../../style/component/modal/modalHomeProductor.sass";
-import CardProuductorGrid from "../card/CardProuductorGrid";
+import CardCustomerGrid from "../card/CardCustomerGrid";
 
 function ModalFormHomeProductor() {
     return (
             <div id="divBigModal__center">
-                <h1> Vos produits </h1>
-                <CardProuductorGrid />
+                <h1> Tous les produits </h1>
+                <CardCustomerGrid />
             </div>
     );
 }

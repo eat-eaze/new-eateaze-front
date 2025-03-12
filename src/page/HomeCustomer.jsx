@@ -1,22 +1,18 @@
 import React from "react";
-// import ModalFormLogin from "../Component/modal/ModalFormLogin";
 import "../style/_allpages.sass";
-
-import ModalFormHome from "../Component/modal/ModalFormHome";
-import NavBar from "../Component/other/NavBar";
-
+import ModalFormHomeCustomer from "../Component/modal/ModalFormHomeCustomer";
 
 function Home() {
-
     return (
         <>
-            <NavBar/>
             <div id="backgroundPage">
                 <div id="BigModal__center">
-                    <ModalFormHome/>
+                    <ModalFormHomeCustomer />
                 </div>
             </div>
         </>
+
+
 
     );
 }

@@ -1,22 +1,56 @@
 // import axios from "axios";
 
+import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
-const handleLogin = async (email,password) => {
+
+const handleLogin = async (email, password) => {
     console.log("test");
+
     try {
-        // const response = await axios.post('https://your-api-url.com/login', {
-        //     email,
-        //     password
-        // });
-        const response = {data: {token: "1234567890"}};
+        const response = await axios.post('http://localhost:3000/user/login', {
+            identifier: email,
+            password: password
+        });
         const token = response.data.token;
+        if (!token) {
+            alert(response.data.error);
+        }
+
+        console.log("res : ", response)
         localStorage.setItem('token', token);
+
         alert('Connexion réussie!');
     } catch (error) {
         console.error('Erreur de connexion', error);
         alert('Échec de la connexion!');
+        throw (error);
     }
 };
+
+const handleRegister = async (email, password) => {
+    console.log("test2");
+
+    try {
+        const response = await axios.post('http://localhost:3000/user/login', {
+            email: email,
+            password: password
+        });
+        const token = response.data.token;
+        if (!token) {
+            alert(response.data.error);
+        }
+
+        console.log("res : ", response)
+        localStorage.setItem('token', token);
+
+        alert('Connexion réussie!');
+    } catch (error) {
+        console.error('Erreur de connexion', error);
+        alert('Échec de la connexion!');
+        throw (error);
+    }
+}
 
 const handleLogout = async () => {
     const token = localStorage.getItem('token'); // Récupérer le token du localStorage
@@ -29,6 +63,4 @@ const handleLogout = async () => {
     alert('Déconnexion réussie!');
 }
 
-
-
-export { handleLogin, handleLogout };
+export { handleLogin, handleRegister, handleLogout };

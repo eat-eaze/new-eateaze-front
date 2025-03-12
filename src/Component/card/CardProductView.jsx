@@ -4,7 +4,7 @@ import '../../style/component/card/cardProductView.sass'
 
 function CardProductView({
     img = "https://via.placeholder.com/150",
-                             titleImg = "Titre de l'image",
+    titleImg = "Titre de l'image",
     title = "Titre",
     description = "Description",
     price = "Prix",

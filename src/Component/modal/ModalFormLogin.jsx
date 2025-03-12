@@ -2,7 +2,7 @@ import "../../style/component/modal/modalLogin.sass";
 import logo from "../../assets/logo/tous_a_la_ferme_logo_fond_blanc.png";
 import InputLabel from "../input/InputLabel";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogin, handleLogout } from "../../service/serviceUser";
 
 function ModalFormLogin() {
@@ -19,6 +19,7 @@ function ModalFormLogin() {
             console.log(`Email : ${emailInput}, Password : ${passwordInput}`);
             await handleLogin(emailInput, passwordInput);
             console.log('Connexion réussie!');
+            window.location.replace('/');
         }catch (error) {
             console.error('Erreur de connexion', error);
             alert('Échec de la connexion!');

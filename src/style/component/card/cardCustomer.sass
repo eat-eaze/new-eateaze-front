@@ -1,0 +1,65 @@
+@import '../../colors'
+
+*
+  //background: #61dafb
+
+.CardCustomer__Container
+  width: calc(150px + 4px)
+  height: auto
+  //padding: 20px
+  position: relative
+  background-color: white
+  border: 2px solid $primary__text
+  box-shadow: 0 0 10px 1px rgba(27,94,32,0.3)
+  border-radius: 10px
+
+  .CardCustomer__banner
+    width: 150px
+    height: 150px
+    position: relative
+    border-radius: 10px
+
+  .CardCustomer__body
+    padding: 10px
+    font-size: 14px
+    color: $primary__text
+
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    gap: 2.5px
+
+    .CardCustomer__titreProduct
+      color: $primary__text
+      font-size: 1.5em
+      font-weight: bold
+      padding-bottom: 5px
+
+    .CardCustomer__textProduct
+      color: $primary__text
+      font-size: 1em
+      //font-weight: bold
+      padding-bottom: 5px
+    .CardCustomer__stockManager
+      display: flex
+      justify-content: space-around
+      align-items: center
+
+      .CardCustomer__Button
+        color: $cta__text
+        background-color: $cta__background
+        width: 30px
+        height: 30px
+        border-radius: 10px
+        text-align: center
+        font-size: 1.5em
+        font-weight: bold
+        padding-bottom: 5px
+        cursor: pointer
+
+      .CardCustomer__stockText
+        color: $primary__text
+        font-size: 1.2em
+        font-weight: bold
+        padding-bottom: 5px
+        align-content: center

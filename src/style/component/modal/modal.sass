@@ -1,46 +1,64 @@
 @import '../../colors'
 
 #divModal__center
-    //position: fixed
-    z-index: 1
-    width: 100%
-    height: calc(100% + 200px)
+  //position: fixed
+  z-index: 1
+  width: 100%
+  height: calc(100% + 200px)
 
-    display: flex
-    justify-content: center
-    align-items: center
-    overflow-y: scroll  /* Ajoute une barre de défilement verticale si nécessaire */
-    padding: 50px
+  display: flex
+  justify-content: center
+  align-items: center
+  overflow-y: scroll
+  /* Ajoute une barre de défilement verticale si nécessaire */
+  padding: 50px
 
-    color : $primary__text
+  color: $primary__text
+
+
+#divBigModal__center
+  width: calc(80% - 40px)
+  min-width: 768px
+  height: auto
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  background: $primary__background
+  border-radius: 10px
+  padding: 20px
+  font-size: 16px
+  color: $primary__text
+
 
 #divModal__container
-    width: 400px
-    max-width: 400px
-    height: auto
-    padding: 20px
-    position: relative
-    background: $primary__background
-    border-radius: 10px
+  width: 400px
+  max-width: 400px
+  height: auto
+  padding: 20px
+  position: relative
+  background: $primary__background
+  border-radius: 10px
 
-    display: flex
-    align-items: center
-    flex-direction: column
+  display: flex
+  align-items: center
+  flex-direction: column
 
 #divModal__logo
+  width: 150px
+  height: auto
+  border: 0 solid $primary__background
+
+  img
     width: 150px
     height: auto
-    border: 0 solid $primary__background
-    img
-        width: 150px
-        height: auto
-        border-radius: 10px
+    border-radius: 10px
 
 #formModal__login
-    width: 100%
-    display: flex
-    flex-direction: column
-    align-items: center
+  width: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
 
 
 
