@@ -1,6 +1,8 @@
-$primary-color: #4CAF50;
+$primary-color: #385e25;
 $secondary-color: #FFA500;
-$text-color: #FFFFFF;
+$primary-text-color: #eaa521;
+$secondary-text-color: #385e25;
+$cta-text-color: #ffffff;
 $hover-brightness: 1.1;
 
 .button {
@@ -8,7 +10,7 @@ $hover-brightness: 1.1;
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
-  color: $text-color;
+  color: inherit;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -17,26 +19,169 @@ $hover-brightness: 1.1;
   transition: all 0.3s ease;
 
   &--primary {
-    background-color: $primary-color;
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+    color: $primary-text-color;
+    box-shadow: 0 4px 15px rgba(56, 94, 37, 0.2);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, darken($primary-color, 10%), $primary-color);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
 
     &:hover {
-      filter: brightness($hover-brightness);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 94, 37, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(56, 94, 37, 0.2);
     }
   }
 
   &--secondary {
-    background-color: $secondary-color;
+    background: linear-gradient(135deg, $secondary-color, darken($secondary-color, 10%));
+    color: $secondary-text-color;
+    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, darken($secondary-color, 10%), $secondary-color);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
 
     &:hover {
-      filter: brightness($hover-brightness);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 165, 0, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2);
     }
   }
 
   &--cta {
-    background: linear-gradient(to bottom right, $primary-color, $secondary-color);
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: $cta-text-color;
+    box-shadow: 0 4px 15px rgba(56, 94, 37, 0.2);
+    border: none;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, $secondary-color, $primary-color);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
 
     &:hover {
-      filter: brightness($hover-brightness);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 94, 37, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(56, 94, 37, 0.2);
+    }
+  }
+
+  &--profile, &--return {
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+    width: 46px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(46, 92, 49, 0.2);
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, darken($primary-color, 10%), $primary-color);
+      border-radius: 12px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 92, 49, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+
+      svg {
+        transform: scale(1.1);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(46, 92, 49, 0.2);
+
+      svg {
+        transform: scale(0.95);
+      }
     }
   }
 }

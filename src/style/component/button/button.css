@@ -30,4 +30,21 @@
   filter: brightness(1.1);
 }
 
+.button--profile {
+  background-color: #2E5C31;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button--profile:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
 /*# sourceMappingURL=button.css.map */
