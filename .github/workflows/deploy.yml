@@ -5,55 +5,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-deploy-front:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      ###################################################
-      # 1) Checkout le FRONT depuis un autre repository
-      ###################################################
-      - name: Checkout front repo
-        uses: actions/checkout@v3
-        with:
-          # Indique le repo "organisation/nom-du-repo"
-          repository: "eat-eaze/new-eateaze-front"
-          # Le token GitHub. GITHUB_TOKEN est fourni automatiquement.
-          # Ou mets un PAT si c'est un repo privé hors organisation.
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # On clone dans un sous-dossier "front"
-          path: "front"
+      # 1) Pas de checkout local. On n'en a pas besoin, 
+      #    car tout se fait sur le VPS.
+      #    (Tu peux mettre un "uses: actions/checkout@v3" 
+      #     si tu veux, mais il n'est pas utile pour un build sur le VPS.)
 
-      ###################################################
-      # 2) Build le FRONT
-      ###################################################
-      - name: Install & build front
-        run: |
-          cd front
-          npm ci
-          npm run build
-
-      ###################################################
-      # 3) SCP du build sur le VPS
-      ###################################################
-      - name: Deploy front to VPS
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}       # IP du VPS
-          username: ubuntu                    # ou root, etc.
-          key: ${{ secrets.SSH_KEY }}         # la clé privée SSH
-          port: 22                            # ou un autre si SSH custom
-          source: "front/build/*"
-          target: "/var/www/tousalaferme/new-eateaze-front/build"
-
-      ###################################################
-      # 4) Reload Nginx
-      ###################################################
-      - name: Reload Nginx
+      - name: SSH into VPS and build
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
-          port: 22
+          # si c'est un autre port SSH, specify: port: 2222
           script: |
+            cd /var/www/tousalaferme/new-eateaze-front
+            git pull
+            npm install
+            npm run build
             sudo systemctl reload nginx
