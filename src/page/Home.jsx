@@ -6,7 +6,7 @@ import NavBar from "../Component/other/NavBar";
 function Home() {
     return (
         <>
-            <NavBar />
+            {/* <NavBar /> */}
             <div id="backgroundPage">
                 <div id="BigModal__center">
                     <ModalFormHome />
