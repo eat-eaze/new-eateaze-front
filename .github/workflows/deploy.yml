@@ -2,7 +2,7 @@ name: Deploy Front
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
@@ -20,10 +20,10 @@ jobs:
       - name: Copy build folder to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}      # ton IP ou domaine
-          username: ubuntu                   # EXACTEMENT 'ubuntu' si c'est l'user
-          key: ${{ secrets.SSH_KEY }}        # La clé privée que tu as ajoutée
-          port: 22                           # ou un autre si tu as changé le port SSH
+          host: ${{ secrets.SSH_HOST }}       # IP ou domaine de ton VPS
+          username: ubuntu                    # l'utilisateur qui possède la clé publique
+          key: ${{ secrets.SSH_KEY }}         # la clé privée (ton secret GitHub)
+          port: 22                            # ou un autre port si SSH n'est pas sur 22
           source: "build/*"
           target: "/var/www/tousalaferme/new-eateaze-front/build"
 
