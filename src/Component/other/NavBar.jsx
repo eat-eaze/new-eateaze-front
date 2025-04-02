@@ -57,7 +57,7 @@ const NavBar = () => {
 
     return (
         <div className={`navbar-container ${isExpanded ? 'expanded' : 'collapsed'}`}>
-            <p>NavBar MAIS TU PUE</p>
+            <p>NavBar MAIS TU PUE !</p>
             <nav className="navbar">
                 <div className="nav-logo">
                     <Link to="/" className="logo-wrapper">
