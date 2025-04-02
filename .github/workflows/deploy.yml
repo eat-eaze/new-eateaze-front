@@ -1,4 +1,4 @@
-name: Deploy Front
+name: Deploy Both
 
 on:
   push:
@@ -9,24 +9,91 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      ###################################################
+      # 1) Pull le FRONT depuis un autre repo
+      ###################################################
+      - name: Checkout front repo
         uses: actions/checkout@v3
+        with:
+          repository: MonGitHubUser/tousalaferme-front
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: front  # On clone dans le sous-dossier "front"
 
-      - name: Install dependencies and build
+      ###################################################
+      # 2) Build le FRONT
+      ###################################################
+      - name: Build front
         run: |
+          cd front
           npm ci
           npm run build
 
-      - name: Copy build folder to VPS
+      ###################################################
+      # 3) SCP du build sur le VPS
+      ###################################################
+      - name: Deploy front to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}       # IP ou domaine de ton VPS
-          username: ubuntu                    # l'utilisateur qui possède la clé publique
-          key: ${{ secrets.SSH_KEY }}         # la clé privée (ton secret GitHub)
-          port: 22                            # ou un autre port si SSH n'est pas sur 22
-          source: "build/*"
+          host: ${{ secrets.SSH_HOST }}         # IP du VPS ex: 217.xxx...
+          username: ubuntu                      # ou root, selon la clé
+          key: ${{ secrets.SSH_KEY }}           # Clé privée SSH
+          source: "front/build/*"
           target: "/var/www/tousalaferme/new-eateaze-front/build"
+          port: 22                              # ou un autre si SSH n'est pas sur 22
 
+      ###################################################
+      # 4) Pull le BACK depuis son repo
+      ###################################################
+      - name: Checkout back repo
+        uses: actions/checkout@v3
+        with:
+          repository: MonGitHubUser/tousalaferme-back
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: back  # On clone dans le sous-dossier "back"
+
+      ###################################################
+      # 5) Installer & Builder le BACK (ou juste npm start)
+      ###################################################
+      - name: Build/Install back
+        run: |
+          cd back
+          npm ci
+          # S'il y a un script de build si c'est TypeScript, par ex:
+          npm run build
+
+      ###################################################
+      # 6) Déployer ou relancer le BACK sur le VPS
+      ###################################################
+      # Méthode A : On scp les fichiers back, puis on fait pm2 restart
+      # Méthode B : On se connecte en SSH pour faire un git pull & npm start
+      # Ici, on suppose qu'on copies le code si besoin, puis on PM2 sur le VPS
+      - name: Copy back to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "back/*"
+          target: "/var/www/tousalaferme/new-eateaze-back"
+
+      # Ensuite, on SSH pour restart le service back (Node/PM2)
+      - name: SSH & restart back
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd /var/www/tousalaferme/new-eateaze-back
+            pm2 stop tousalaferme-back || true
+            pm2 start "npm run start" --name "tousalaferme-back"
+            pm2 save
+
+      ###################################################
+      # 7) Reload Nginx (optionnel)
+      ###################################################
       - name: Reload Nginx
         uses: appleboy/ssh-action@v0.1.8
         with:
