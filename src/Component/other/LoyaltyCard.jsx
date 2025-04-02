@@ -1,5 +1,5 @@
 import "../../style/component/other/LoyaltyCard.sass";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import imgFillLoyaltyPoint from '../../assets/icon/empty_Icon.png';
 import imgEmptyLoyaltyPoint from '../../assets/icon/fill_Loyalty.svg';
 
@@ -14,7 +14,7 @@ function LoyaltyCard() {
         });
     }
 
-    const createLoyaltyIcon = () => {
+    const createLoyaltyIcon = useCallback(() => {
         let array = [];
 
         for (let i = 0; i < loyaltyCard.loyaltyPoint; i++) {
@@ -28,17 +28,16 @@ function LoyaltyCard() {
         }
         setLoyaltyIcon(array);
         return array;
-    }
+    }, [loyaltyCard]);
 
     useEffect(() => {
         const loading = async () => {
             await fetchLoyaltyCard();
             createLoyaltyIcon();
-            console.log("loyaltyIcon  ", loyaltyIcon);
         }
 
         loading();
-    }, [loyaltyIcon, createLoyaltyIcon]);
+    }, [createLoyaltyIcon]);
 
     return (
         <div id="div__containerLoyaltyCard">

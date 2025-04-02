@@ -8,15 +8,6 @@ import { handleRegister } from "../../service/serviceUser";
 function ModalFormLogin() {
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
-    const [lastNameInput, setLastNameInput] = useState("");
-    const [firstNameInput, setFirstNameInput] = useState("");
-    const [roleInput, setRoleInput] = useState("");
-    const [phoneInput, setPhoneInput] = useState("");
-    const [SiretInput, setSiretInput] = useState("");
-    const [nameCompayInput, setNameCompayInput] = useState("");
-
-    const [PersonalInformationInput, setPersonalInformationInput] = useState("");
-    const [Input, setInput] = useState("");
 
     useEffect(() => {
         console.log(`useEffect : ${emailInput}, ou ${passwordInput}`);
@@ -41,32 +32,32 @@ function ModalFormLogin() {
             <div id="divModal__center">
                 <div id="divModal__container">
                     <div id="divModal__logo">
-                        <img src={logo} alt=""/>
+                        <img src={logo} alt="" />
                     </div>
                     <div id="div__textarea">
                         <h1 id="welcome">Bienvenue</h1>
                     </div>
                     <form method="post" id="formModal__login">
-                        {}
+                        { }
                         <InputLabel labelText="Email"
-                                    placeHolder={"Email@TousALaFerme.com"}
-                                    id={"emailInput"} valueInput={emailInput}
-                                    setValueInput={setEmailInput}
-                                    type={"email"}/>
+                            placeHolder={"Email@TousALaFerme.com"}
+                            id={"emailInput"} valueInput={emailInput}
+                            setValueInput={setEmailInput}
+                            type={"email"} />
                         <InputLabel labelText="Confirmer l'Email"
-                                    placeHolder={"Email@TousALaFerme.com"}
-                                    id={"emailInput"} valueInput={emailInput}
-                                    setValueInput={setEmailInput}
-                                    type={"email"}/>
+                            placeHolder={"Email@TousALaFerme.com"}
+                            id={"emailInput"} valueInput={emailInput}
+                            setValueInput={setEmailInput}
+                            type={"email"} />
                         <InputLabel labelText="mot de passe"
-                                    placeHolder="Mot de passe" id="password"
-                                    valueInput={passwordInput}
-                                    setValueInput={setPasswordInput}
-                                    type="password"/>
+                            placeHolder="Mot de passe" id="password"
+                            valueInput={passwordInput}
+                            setValueInput={setPasswordInput}
+                            type="password" />
                     </form>
                     <p onClick={handleRegisterClick}>Boutton de Josué</p>
                     <p id="paragraph__textparam">Un compte ? <Link to={"/login"}
-                                                                   id="link__register">connectez-vous</Link>
+                        id="link__register">connectez-vous</Link>
                     </p>
                 </div>
             </div>
