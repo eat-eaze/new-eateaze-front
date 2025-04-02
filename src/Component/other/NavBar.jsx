@@ -57,6 +57,7 @@ const NavBar = () => {
 
     return (
         <div className={`navbar-container ${isExpanded ? 'expanded' : 'collapsed'}`}>
+            <p>NavBar MAIS TU PUE</p>
             <nav className="navbar">
                 <div className="nav-logo">
                     <Link to="/" className="logo-wrapper">
@@ -64,28 +65,28 @@ const NavBar = () => {
                         <span className="logo-text">ADMIN PANEL</span>
                     </Link>
                 </div>
-                
+
                 <div className="nav-buttons">
                     {getLinks().map((link, index) => (
-                        <Link 
-                            key={index} 
-                            to={link.to} 
+                        <Link
+                            key={index}
+                            to={link.to}
                             className={`nav-button ${isActive(link.to)}`}
                         >
                             {link.label}
                         </Link>
                     ))}
                 </div>
-                
+
                 <div className="dropdown-container">
-                    <button 
-                        className="role-dropdown-button" 
+                    <button
+                        className="role-dropdown-button"
                         onClick={toggleDropdown}
                     >
-                        {role.charAt(0).toUpperCase() + role.slice(1)} 
+                        {role.charAt(0).toUpperCase() + role.slice(1)}
                         <span className="dropdown-arrow">{isDropdownOpen ? '▲' : '▼'}</span>
                     </button>
-                    
+
                     {isDropdownOpen && (
                         <div className="role-dropdown-menu">
                             <button onClick={() => changeRole("admin")}>Admin</button>
@@ -95,7 +96,7 @@ const NavBar = () => {
                     )}
                 </div>
             </nav>
-            
+
             <button
                 className={`nav-toggle-button ${isExpanded ? 'nav-toggle-button-open' : 'nav-toggle-button-close'}`}
                 onClick={toggleNav}
