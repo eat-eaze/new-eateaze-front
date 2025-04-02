@@ -19,12 +19,12 @@ function LoyaltyCard() {
 
         for (let i = 0; i < loyaltyCard.loyaltyPoint; i++) {
             array.push(<img src={imgEmptyLoyaltyPoint}
-                            alt="loyaltyPoint FULL"/>)
+                alt="loyaltyPoint FULL" />)
         }
 
         for (let i = 0; i < loyaltyCard.loyaltyPointMax - loyaltyCard.loyaltyPoint; i++) {
             array.push(<img src={imgFillLoyaltyPoint}
-                            alt="loyaltyPoint EMPTY"/>)
+                alt="loyaltyPoint EMPTY" />)
         }
         setLoyaltyIcon(array);
         return array;
@@ -38,7 +38,7 @@ function LoyaltyCard() {
         }
 
         loading();
-    }, []);
+    }, [loyaltyIcon, createLoyaltyIcon]);
 
     return (
         <div id="div__containerLoyaltyCard">
@@ -51,13 +51,11 @@ function LoyaltyCard() {
                 ))}
                 {createLoyaltyIcon}
             </div>
-            <div__containerProuctSell>
+            <div id="div__containerProuctSell">
                 {/*titleImg={"Titre de l'image"} stock={50}*/}
                 {/*img={"https://th.bing.com/th?id=OSK.8dbc20829d96db4fc4e91f8c4859ed6d&w=200&h=200&c=7&rs=1&o=6&dpr=1.3&pid=SANGAM"}/>*/}
-            </div__containerProuctSell>
+            </div>
         </div>
-
-
     )
 }
 

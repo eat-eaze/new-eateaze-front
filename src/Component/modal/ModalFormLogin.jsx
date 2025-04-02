@@ -2,16 +2,16 @@ import "../../style/component/modal/modalLogin.sass";
 import logo from "../../assets/logo/tous_a_la_ferme_logo_fond_blanc.png";
 import InputLabel from "../input/InputLabel";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { handleLogin, handleLogout } from "../../service/serviceUser";
 
 function ModalFormLogin() {
-    const [emailInput,setEmailInput] = useState("");
-    const [passwordInput,setPasswordInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
 
     useEffect(() => {
         console.log(`useEffect : ${emailInput}, ou ${passwordInput}`);
-    }, [emailInput,passwordInput]);
+    }, [emailInput, passwordInput]);
 
     const handleLoginClick = async () => {
         console.log("test");
@@ -20,7 +20,7 @@ function ModalFormLogin() {
             await handleLogin(emailInput, passwordInput);
             console.log('Connexion réussie!');
             window.location.replace('/');
-        }catch (error) {
+        } catch (error) {
             console.error('Erreur de connexion', error);
             alert('Échec de la connexion!');
         }
@@ -31,7 +31,7 @@ function ModalFormLogin() {
         try {
             await handleLogout();
             console.log('déconnexion réussie!');
-        }catch (error) {
+        } catch (error) {
             console.error('Erreur de déconnexion', error);
             alert('Échec de la déconnexion!');
         }
@@ -43,7 +43,7 @@ function ModalFormLogin() {
             <div id="divModal__center">
                 <div id="divModal__container">
                     <div id="divModal__logo">
-                        <img src={logo} alt="" onClick={handleLogoutClick}/>
+                        <img src={logo} alt="" onClick={handleLogoutClick} />
                     </div>
                     <div id="div__textarea">
                         <h1 id="welcome">Ravi de vous revoir !</h1>

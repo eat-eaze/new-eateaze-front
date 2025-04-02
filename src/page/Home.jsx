@@ -1,5 +1,5 @@
 import React from "react";
-// import ModalFormLogin from "../Component/modal/ModalFormLogin";
+{/* import ModalFormLogin from "../Component/modal/ModalFormLogin"; */ }
 import "../style/_allpages.sass";
 
 import ModalFormHome from "../Component/modal/ModalFormHome";
@@ -10,10 +10,10 @@ function Home() {
 
     return (
         <>
-            <NavBar/>
+            <NavBar />
             <div id="backgroundPage">
                 <div id="BigModal__center">
-                    <ModalFormHome/>
+                    <ModalFormHome />
                 </div>
             </div>
         </>
