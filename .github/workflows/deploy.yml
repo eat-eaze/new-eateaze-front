@@ -5,27 +5,25 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
+  deploy-front:
     runs-on: ubuntu-latest
 
     steps:
       ###################################################
       # 1) Pull le FRONT depuis un autre repo
       ###################################################
-      - name: Checkout front repo
-        uses: actions/checkout@v3
-        with:
-          repository: eat-eaze/new-eateaze-front
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: front  # On clone dans le sous-dossier "front"
+      - name: Get new-eateaze-front
+        run: |
+          cd /var/www/tousalaferme/new-eateaze-front
+          git pull origin main
+          npm ci
 
       ###################################################
       # 2) Build le FRONT
       ###################################################
       - name: Build front
         run: |
-          cd front
-          npm ci
+          cd /var/www/tousalaferme/new-eateaze-front
           npm run build
 
       ###################################################
