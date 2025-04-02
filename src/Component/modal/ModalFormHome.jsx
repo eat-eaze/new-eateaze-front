@@ -1,10 +1,6 @@
-// import "../../style/component/modal/modal.css";
-// change le chemin de l'importation du css
 import "../../style/component/modal/modal.sass";
 import "../../style/component/modal/modalHome.sass";
 import logo from "../../assets/logo/tous_a_la_ferme_logo_fond_blanc.png";
-
-// import InputLabel from "../input/InputLabel";
 
 function ModalForm() {
     return (
@@ -12,7 +8,7 @@ function ModalForm() {
             <div id="divBigModal__center">
                 <div id="divBigModal__Home">
                     <div id="divModal__logo">
-                        <img id="logoModal" src={logo} alt="logo"/>
+                        <img id="logoModal" src={logo} alt="logo" />
                     </div>
                     <div id="divModal__textarea">
                         <h1 id="titleModal">Bienvenue à tout à la ferme</h1>
