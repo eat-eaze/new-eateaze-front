@@ -1,29 +1,35 @@
-name: Deploy Both
+name: Deploy Front
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  deploy-front:
+  build-and-deploy-front:
     runs-on: ubuntu-latest
 
     steps:
       ###################################################
-      # 1) Pull le FRONT depuis un autre repo
+      # 1) Checkout le FRONT depuis un autre repository
       ###################################################
-      - name: Get new-eateaze-front
-        run: |
-          cd /var/www/tousalaferme/new-eateaze-front
-          git pull origin main
-          npm ci
+      - name: Checkout front repo
+        uses: actions/checkout@v3
+        with:
+          # Indique le repo "organisation/nom-du-repo"
+          repository: "eat-eaze/new-eateaze-front"
+          # Le token GitHub. GITHUB_TOKEN est fourni automatiquement.
+          # Ou mets un PAT si c'est un repo privé hors organisation.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # On clone dans un sous-dossier "front"
+          path: "front"
 
       ###################################################
       # 2) Build le FRONT
       ###################################################
-      - name: Build front
+      - name: Install & build front
         run: |
-          cd /var/www/tousalaferme/new-eateaze-front
+          cd front
+          npm ci
           npm run build
 
       ###################################################
@@ -32,12 +38,12 @@ jobs:
       - name: Deploy front to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}         # IP du VPS ex: 217.xxx...
-          username: ubuntu                      # ou root, selon la clé
-          key: ${{ secrets.SSH_KEY }}           # Clé privée SSH
+          host: ${{ secrets.SSH_HOST }}       # IP du VPS
+          username: ubuntu                    # ou root, etc.
+          key: ${{ secrets.SSH_KEY }}         # la clé privée SSH
+          port: 22                            # ou un autre si SSH custom
           source: "front/build/*"
           target: "/var/www/tousalaferme/new-eateaze-front/build"
-          port: 22                              # ou un autre si SSH n'est pas sur 22
 
       ###################################################
       # 4) Reload Nginx
