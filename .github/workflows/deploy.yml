@@ -1,0 +1,39 @@
+name: Deploy Front
+on:
+  push:
+    branches: [ "main" ]  # Ou la branche que tu veux déployer
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Récupérer le code
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # 2) Installer dépendances & build
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      # 3) Transférer le dossier build/ vers le VPS
+      - name: Copy build folder to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "build/*"
+          target: "/var/www/tousalaferme/new-eateaze-front/build"
+
+      # 4) (Optionnel) Lancer des commandes SSH (reload Nginx, etc.)
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo systemctl reload nginx
