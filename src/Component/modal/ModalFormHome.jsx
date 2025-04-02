@@ -17,7 +17,7 @@ function ModalForm() {
                             ci-dessous.</h2>
                     </div>
                     <div id="Modal__login">
-                        <p>/*GROS BTN POUR SE CONNECTER DE JOSUE*/</p>
+                        <p>GROS BTN POUR SE CONNECTER DE JOSUE</p>
                     </div>
 
                 </div>
