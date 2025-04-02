@@ -2,41 +2,37 @@ name: Deploy Front
 
 on:
   push:
-    branches: [ "main" ]  # Déclenche l'action uniquement sur la branche main
+    branches: ["main"]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Récupérer le code du repo
       - name: Check out code
         uses: actions/checkout@v3
 
-      # 2) Installer les dépendances & compiler le front
       - name: Install dependencies and build
         run: |
           npm ci
           npm run build
 
-      # 3) Copier le dossier build/ vers le VPS
       - name: Copy build folder to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}      # ton IP ou domaine
+          username: ubuntu                   # EXACTEMENT 'ubuntu' si c'est l'user
+          key: ${{ secrets.SSH_KEY }}        # La clé privée que tu as ajoutée
+          port: 22                           # ou un autre si tu as changé le port SSH
           source: "build/*"
           target: "/var/www/tousalaferme/new-eateaze-front/build"
-          # Si ton SSH écoute sur un autre port que 22,
-          # ajoute: port: 2222 (par exemple)
 
-      # 4) Relancer Nginx (optionnel si tu sers des fichiers statiques)
       - name: Reload Nginx
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
+          username: ubuntu
           key: ${{ secrets.SSH_KEY }}
+          port: 22
           script: |
             sudo systemctl reload nginx
