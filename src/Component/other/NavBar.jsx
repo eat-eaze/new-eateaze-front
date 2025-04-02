@@ -58,7 +58,6 @@ const NavBar = () => {
     return (
         <div className={`navbar-container ${isExpanded ? 'expanded' : 'collapsed'}`}>
             <nav className="navbar">
-                <p>NavBar ca marche !</p>
                 <div className="nav-logo">
                     <Link to="/" className="logo-wrapper">
                         <span className="logo-icon" role="img" aria-label="Ferme">🛡️</span>
