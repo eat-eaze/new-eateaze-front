@@ -1,33 +1,28 @@
-name: Deploy Back
+name: Deploy Front
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  deploy-back:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1) On se connecte en SSH au VPS pour y faire notre mise à jour
-      - name: SSH, pull code, build, restart
+      # 1) Pas de checkout local. On n'en a pas besoin, 
+      #    car tout se fait sur le VPS.
+      #    (Tu peux mettre un "uses: actions/checkout@v3" 
+      #     si tu veux, mais il n'est pas utile pour un build sur le VPS.)
+
+      - name: SSH into VPS and build
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
-          # port: 22  # si tu as un port SSH custom, indique-le
+          # si c'est un autre port SSH, specify: port: 2222
           script: |
-            # Aller dans le dossier cloné du back
-            cd /var/www/tousalaferme/new-eateaze-back
-            # Mettre à jour (pull) les derniers commits
+            cd /var/www/tousalaferme/new-eateaze-front
             git pull
-            # Installer dépendances
             npm install
-            # (optionnel) Build si c'est un projet TypeScript ou similaire
             npm run build
-
-            # Redémarrer l'application. Ex:
-            # si tu lances en pm2 :
-            pm2 stop tousalaferme-back || true
-            pm2 start "npm run start" --name "tousalaferme-back"
-            pm2 save
+            sudo systemctl reload nginx
