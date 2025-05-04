@@ -1,0 +1,71 @@
+@import '../../colors'
+
+#divBigModal__Cart
+    min-height: 500px
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 25px
+    text-align: center
+
+#divModal__textarea
+    gap: 25px
+    font-size: 16px
+    color: $primary__text
+
+    h1
+        font-size: 1.5rem
+        font-weight: 500
+        margin-bottom: 10px
+
+    h2
+        font-size: 1.2rem
+        font-weight: 400
+        margin-bottom: 10px
+
+#divBigModal__InputMain
+    display: flex
+    justify-content: space-between
+    width: 80%
+    min-height: 100px
+    height: auto
+
+#divBigModal__InputText
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+#divBigModal__InputImage
+    max-width: 250px
+
+#divBigModal__InputDescription
+    width: 80%
+textarea
+    width: 100%
+    height: 100px
+
+#submit
+    width: calc(80% - 80px)
+    height: 50px
+    display: flex
+    flex-direction: row-reverse
+
+button
+    width: 80px
+    height: 50px
+    background-color: $primary__text
+    color: $primary__background
+    border: none
+    border-radius: 5px
+    font-size: 1.2rem
+    font-weight: 500
+    cursor: pointer
+    transition: 0.3s
+    color: $cta__text
+
+    &:hover
+        background-color: $primary__text
+        color: $primary__background
+        border: 1px solid $primary__text
+        transition: 0.3s

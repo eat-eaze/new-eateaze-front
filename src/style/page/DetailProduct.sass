@@ -1,0 +1,88 @@
+.cartPage__background
+    background: linear-gradient(to bottom right, #a8e063, #f6d365)
+    min-height: 100vh
+    padding: 40px
+    border-radius: 30px
+
+.cartPage__header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 30px
+
+.cartPage__icon
+    position: relative
+img
+    width: 40px
+
+.cartPage__badge
+    position: absolute
+    top: -10px
+    right: -10px
+    background: orange
+    color: white
+    border-radius: 50%
+    width: 20px
+    height: 20px
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 12px
+
+.cartPage__products
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    gap: 20px
+
+.cartPage__card
+    background: white
+    padding: 20px
+    border-radius: 15px
+    text-align: center
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1)
+
+.cartPage__image
+    width: 100%
+    height: 150px
+    object-fit: cover
+    border-radius: 10px
+
+.cartPage__title
+    font-size: 18px
+    font-weight: bold
+    margin-top: 10px
+
+.cartPage__description
+    font-size: 14px
+    color: #666
+    margin: 10px 0
+
+.cartPage__quantity
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 10px
+    margin-top: 10px
+
+.quantity-btn
+    background: none
+    border: 1px solid #ccc
+    border-radius: 5px
+    width: 30px
+    height: 30px
+    cursor: pointer
+    font-size: 20px
+
+.cartPage__checkout
+    display: flex
+    justify-content: flex-end
+    margin-top: 30px
+
+.checkout-btn
+    background: linear-gradient(to right, #56ab2f, #a8e063)
+    padding: 10px 20px
+    border: none
+    border-radius: 10px
+    color: white
+    font-weight: bold
+    cursor: pointer

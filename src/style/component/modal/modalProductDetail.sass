@@ -1,0 +1,154 @@
+@import '../../colors'
+
+#divBigModal__ProductDetail
+    min-height: 500px
+    width: 100%
+    display: flex
+    // flex-direction: column
+    align-items: center
+    gap: 25px
+    text-align: center
+
+#divModal__textarea
+    gap: 25px
+    font-size: 16px
+    color: $primary__text
+
+    h1
+        font-size: 1.5rem
+        font-weight: 500
+        margin-bottom: 10px
+
+    h2
+        font-size: 1.2rem
+        font-weight: 400
+        margin-bottom: 10px
+
+#divBigModal__InputMain
+    display: flex
+    justify-content: space-between
+    width: 80%
+    min-height: 100px
+    height: auto
+
+#divBigModal__InputText
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+#divBigModal__InputImage
+    max-width: 250px
+
+#divBigModal__InputDescription
+    width: 80%
+textarea
+    width: 100%
+    height: 100px
+
+#submit
+    width: calc(80% - 80px)
+    height: 50px
+    display: flex
+    flex-direction: row-reverse
+
+button
+    width: 80px
+    height: 50px
+    background-color: $primary__text
+    color: $primary__background
+    border: none
+    border-radius: 5px
+    font-size: 1.2rem
+    font-weight: 500
+    cursor: pointer
+    transition: 0.3s
+    color: $cta__text
+
+    &:hover
+        background-color: $primary__text
+        color: $primary__background
+        border: 1px solid $primary__text
+        transition: 0.3s
+
+#divBigModal__ProductDetail__left
+    width: 50%
+    img
+        width: calc( 100% - 50px )
+        height: calc( 100% - 50px )
+        padding: 25px
+        object-fit: cover
+
+#divBigModal__ProductDetail__right
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    width: 50%
+    gap: 10px
+
+    h1
+        font-size: 2rem
+        font-weight: 500
+        margin-bottom: 10px
+
+    p
+        text-align: left
+        font-size: 1.2rem
+        font-weight: 400
+
+    #divBigModal__ProductDetail__section
+        margin-top: 25px
+        display: flex
+        justify-content: space-around
+        width: 100%
+
+    #divBigModal__ProductDetail__right__tag
+        display: flex
+        flex-direction: row
+        gap: 10px
+
+        .divBigModal__ProductDetail__right__tag__type
+            background-color: #989898
+            border: 1px solid #989898
+            border-radius: 5px
+            padding: 2.5px
+            color: #c9c9c9
+
+// Styles pour le dropdown
+.dropdown
+    position: relative
+    display: inline-block
+    width: 100%
+    margin: 10px 0
+
+    &__button
+        width: 100%
+        padding: 10px
+        background-color: $primary__background
+        border: 1px solid $primary__text
+        border-radius: 5px
+        cursor: pointer
+        text-align: left
+        font-size: 1rem
+        color: $primary__text
+
+        &:hover
+            background-color: darken($primary__background, 5%)
+
+    &__content
+        position: absolute
+        top: 100%
+        left: 0
+        width: 100%
+        background-color: $primary__background
+        border: 1px solid $primary__text
+        border-radius: 5px
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+        z-index: 1
+
+    &__item
+        padding: 10px
+        cursor: pointer
+        color: $primary__text
+
+        &:hover
+            background-color: darken($primary__background, 5%)
