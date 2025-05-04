@@ -9,7 +9,7 @@ function ModalForm() {
         <>
             <div id="divModal__center">
                 <div id="divModal__container">
-                    <img src={logo} alt="" id="divModal__logo"/>
+                    <img src={logo} alt="" id="divModal__logo" />
                     <form method="post">
                         <InputLabel labelText={"Email"} placeHolder={"Email@TousALaFerme.com"} id={"emailInput"} />
                     </form>

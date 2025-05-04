@@ -1,0 +1,18 @@
+$background-gradient: linear-gradient(to bottom right, #4CAF50, #FFA500);
+$viewport-width: 100vw;
+$viewport-height: 100vh;
+
+#backgroundLogin {
+    width: $viewport-width;
+    height: $viewport-height;
+    position: absolute;
+    background: $background-gradient;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    top: 0;
+}
+
+#div__containerLogin {
+    position: relative;
+}

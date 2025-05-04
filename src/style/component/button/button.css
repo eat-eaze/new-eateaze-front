@@ -1,0 +1,50 @@
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button--primary {
+  background-color: #4CAF50;
+}
+.button--primary:hover {
+  filter: brightness(1.1);
+}
+.button--secondary {
+  background-color: #FFA500;
+}
+.button--secondary:hover {
+  filter: brightness(1.1);
+}
+.button--cta {
+  background: linear-gradient(to bottom right, #4CAF50, #FFA500);
+}
+.button--cta:hover {
+  filter: brightness(1.1);
+}
+
+.button--profile {
+  background-color: #2E5C31;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button--profile:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/*# sourceMappingURL=button.css.map */
