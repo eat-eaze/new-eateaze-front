@@ -17,6 +17,56 @@ $toggle-button-size: 40px
   &.collapsed
     transform: translateY(calc(-1 * (50px + 2 * 1rem)))
 
+  .auth-buttons
+    display: flex
+    align-items: center
+    gap: 1rem
+    margin-left: auto
+    padding-right: 2rem
+
+    .button
+      padding: 0.5rem 1rem
+      border-radius: 4px
+      text-decoration: none
+      font-weight: 500
+      transition: all 0.3s ease
+
+      &--login
+        background-color: transparent
+        color: #eaa521
+        border: 1px solid #eaa521
+
+        &:hover
+          background-color: #eaa521
+          color: white
+
+      &--register
+        background-color: #eaa521
+        color: white
+        border: 1px solid #eaa521
+
+        &:hover
+          background-color: darken(#eaa521, 10%)
+          border-color: darken(#eaa521, 10%)
+
+      &--profile
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 40px
+        height: 40px
+        padding: 0
+        border-radius: 50%
+        background-color: transparent
+        border: 1px solid #eaa521
+
+        svg
+          width: 24px
+          height: 24px
+
+        &:hover
+          background-color: rgba(#eaa521, 0.1)
+
 // Style de la barre de navigation
 .navbar
   background: $primary__background

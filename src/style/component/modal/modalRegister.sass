@@ -10,13 +10,13 @@
     justify-content: center
     align-items: center
 
-    color : $primary__text
+    color: $primary__text
 
 #divModal__container
-    width: 400px
-    max-width: 400px
+    width: 480px
+    max-width: 480px
     height: auto
-    padding: 20px
+    padding: 30px
     position: relative
     background: $primary__background
     border-radius: 10px
@@ -24,14 +24,18 @@
     display: flex
     align-items: center
     flex-direction: column
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15)
 
     #div__textarea
+        width: 100%
         font-size: 20px
         text-align: center
         padding: 10px
+        margin-bottom: 10px
         h1
             color: $primary__text
-            font-size: 1.5rem
+            font-size: 1.8rem
+            margin-bottom: 15px
         h2
             color: $primary__text
             font-size: 1.1rem
@@ -39,16 +43,22 @@
     #paragraph__textparam
         font-size: 1rem
         color: $primary__text
-        margin: 10px
+        margin: 20px 0 10px
         text-align: center
         a
-            color: $primary__text
+            color: $cta__background
             text-decoration: underline
+            font-weight: 500
+            transition: color 0.3s ease
+
+            &:hover
+                color: darken($cta__background, 10%)
 
 #divModal__logo
     width: 150px
     height: auto
     border: 0 solid $primary__background
+    margin-bottom: 15px
     img
         width: 150px
         height: auto
@@ -59,6 +69,44 @@
     display: flex
     flex-direction: column
     align-items: center
+    position: relative
 
+.form-step
+    width: 100%
+    transition: opacity 0.3s ease, transform 0.3s ease
 
+    &.active
+        opacity: 1
+        transform: translateX(0)
 
+    &.inactive
+        position: absolute
+        opacity: 0
+        transform: translateX(100%)
+        pointer-events: none
+
+.form-navigation
+    width: 100%
+    display: flex
+    justify-content: center
+    margin-top: 20px
+
+.form-section-title
+    font-size: 1.2rem
+    font-weight: 600
+    margin: 15px 0
+    color: $primary__text
+    text-align: center
+
+.form-grid
+    display: grid
+    grid-template-columns: 1fr 1fr
+    gap: 10px
+    width: 100%
+
+.form-grid-full
+    grid-column: span 2
+
+.invitation-code-container
+    margin: 20px 0
+    width: 100%

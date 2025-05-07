@@ -1,16 +1,15 @@
 // import "../style/page/register.css";
 // change path of css and right css file
 
+import "../style/page/register.sass";
 import ModalFormRegister from "../Component/modal/ModalFormRegister";
 
 function Register() {
-
-
     return (
         <>
             <div id="backgroundLogin">
                 <div id="div__containerLogin">
-                    <ModalFormRegister/>
+                    <ModalFormRegister />
                 </div>
             </div>
         </>

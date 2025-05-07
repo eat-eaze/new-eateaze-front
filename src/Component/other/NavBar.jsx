@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../../style/component/other/navBar.sass';
 import '../../style/component/other/navBar-additions.sass';
+import '../../style/component/button/button.scss';
 
 const NavBar = () => {
     const [isExpanded, setIsExpanded] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [role, setRole] = useState("admin");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const location = useLocation();
 
     const toggleNav = () => {
@@ -19,40 +20,9 @@ const NavBar = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const changeRole = (newRole) => {
-        setRole(newRole);
-        setIsDropdownOpen(false);
-    };
-
     // Déterminer si un lien est actif
     const isActive = (path) => {
         return location.pathname === path ? 'active-link' : '';
-    };
-
-    // Routes pour chaque rôle
-    const getLinks = () => {
-        switch (role) {
-            case 'admin':
-                return [
-                    { to: "/", label: "Accueil" },
-                    { to: "/productor", label: "Producteurs" },
-                    { to: "/customer", label: "Clients" },
-                    { to: "/profil/admin", label: "Profil" }
-                ];
-            case 'producteur':
-                return [
-                    { to: "/productor", label: "Accueil" },
-                    { to: "/addproduct", label: "Ajouter Produit" },
-                    { to: "/profil/producteur", label: "Profil" }
-                ];
-            case 'client':
-                return [
-                    { to: "/customer", label: "Accueil" },
-                    { to: "/profil/client", label: "Profil" }
-                ];
-            default:
-                return [];
-        }
     };
 
     return (
@@ -61,37 +31,32 @@ const NavBar = () => {
                 <div className="nav-logo">
                     <Link to="/" className="logo-wrapper">
                         <span className="logo-icon" role="img" aria-label="Ferme">🛡️</span>
-                        <span className="logo-text">ADMIN PANEL</span>
+                        <span className="logo-text">EATEAZE</span>
                     </Link>
                 </div>
 
                 <div className="nav-buttons">
-                    {getLinks().map((link, index) => (
-                        <Link
-                            key={index}
-                            to={link.to}
-                            className={`nav-button ${isActive(link.to)}`}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
+                    <Link to="/" className={`nav-button ${isActive('/')}`}>
+                        Accueil
+                    </Link>
                 </div>
 
-                <div className="dropdown-container">
-                    <button
-                        className="role-dropdown-button"
-                        onClick={toggleDropdown}
-                    >
-                        {role.charAt(0).toUpperCase() + role.slice(1)}
-                        <span className="dropdown-arrow">{isDropdownOpen ? '▲' : '▼'}</span>
-                    </button>
-
-                    {isDropdownOpen && (
-                        <div className="role-dropdown-menu">
-                            <button onClick={() => changeRole("admin")}>Admin</button>
-                            <button onClick={() => changeRole("producteur")}>Producteur</button>
-                            <button onClick={() => changeRole("client")}>Client</button>
-                        </div>
+                <div className="auth-buttons">
+                    {!isLoggedIn ? (
+                        <>
+                            <Link to="/login" className="button button--login">
+                                Se Connecter
+                            </Link>
+                            <Link to="/register" className="button button--register">
+                                S'inscrire
+                            </Link>
+                        </>
+                    ) : (
+                        <Link to="/profile" className="button button--profile">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#eaa521">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                        </Link>
                     )}
                 </div>
             </nav>

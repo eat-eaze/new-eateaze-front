@@ -13,11 +13,14 @@ function ModalFormLogin() {
         console.log(`useEffect : ${emailInput}, ou ${passwordInput}`);
     }, [emailInput, passwordInput]);
 
-    const handleLoginClick = async () => {
+    const handleLoginClick = async (e) => {
+        e.preventDefault();
         console.log("test");
         try {
             console.log(`Email : ${emailInput}, Password : ${passwordInput}`);
-            await handleLogin(emailInput, passwordInput);
+            const data = await handleLogin(emailInput, passwordInput);
+            const token = data.token;
+            document.cookie = `token=${token}; path=/;`;
             console.log('Connexion réussie!');
             window.location.replace('/');
         } catch (error) {
@@ -54,7 +57,7 @@ function ModalFormLogin() {
                         <InputLabel labelText={"mot de passe"} placeHolder={"Password"} id={"password"} valueInput={passwordInput} setValueInput={setPasswordInput} type={"password"} />
                     </form>
                     <p id="paragraph__textparam">Pas encore de compte ? <Link to="/register" id="link__register">Inscrivez-vous</Link></p>
-                    <p onClick={handleLoginClick}>Boutton de Josué</p>
+                    <button onClick={handleLoginClick} style={{ padding: "10px", borderRadius: "5px", cursor: "pointer", width: "90%" }}>Boutton de Josué</button>
                 </div>
             </div>
         </>

@@ -10,22 +10,29 @@
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-left: 1rem;
 }
+
 .button--primary {
   background-color: #4CAF50;
 }
+
 .button--primary:hover {
   filter: brightness(1.1);
 }
+
 .button--secondary {
   background-color: #FFA500;
 }
+
 .button--secondary:hover {
   filter: brightness(1.1);
 }
+
 .button--cta {
   background: linear-gradient(to bottom right, #4CAF50, #FFA500);
 }
+
 .button--cta:hover {
   filter: brightness(1.1);
 }
@@ -39,6 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

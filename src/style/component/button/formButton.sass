@@ -1,0 +1,32 @@
+@import '../../colors'
+
+.form-button
+    width: 100%
+    max-width: 300px
+    margin: 15px 0
+    padding: 12px 20px
+    background-color: $cta__background
+    color: $cta__text
+    border: none
+    border-radius: 8px
+    font-size: 16px
+    font-weight: 600
+    cursor: pointer
+    transition: all 0.3s ease
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+    text-align: center
+
+    &:hover
+        background-color: darken($cta__background, 10%)
+        transform: translateY(-2px)
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15)
+
+    &:active
+        transform: translateY(0)
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+
+    &:disabled
+        background-color: lighten($cta__background, 20%)
+        cursor: not-allowed
+        transform: none
+        box-shadow: none

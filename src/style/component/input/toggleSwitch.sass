@@ -1,0 +1,47 @@
+@import '../../colors'
+
+.toggle-switch-container
+    display: flex
+    justify-content: center
+    margin: 15px 0
+
+.toggle-switch
+    position: relative
+    display: flex
+    background-color: $tertiary__background
+    border-radius: 30px
+    padding: 4px
+    width: 200px
+    height: 40px
+    cursor: pointer
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+
+.toggle-switch-slider
+    position: absolute
+    background-color: $cta__background
+    border-radius: 24px
+    top: 4px
+    width: calc(50% - 4px)
+    height: calc(100% - 8px)
+    transition: transform 0.3s ease
+    z-index: 1
+
+    &.left
+        transform: translateX(2px)
+
+    &.right
+        transform: translateX(calc(100% + 2px))
+
+.toggle-switch-option
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 50%
+    height: 100%
+    z-index: 2
+    color: $secondary__text
+    font-weight: 500
+    transition: color 0.3s ease
+
+    &.active
+        color: $cta__text
