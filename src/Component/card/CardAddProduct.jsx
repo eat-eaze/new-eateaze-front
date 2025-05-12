@@ -1,18 +1,15 @@
-import React from 'react'
+import React from "react";
 // import img from '../assets/img.png';
-import '../../style/component/card/CardAddProduct.sass'
-import { Link } from "react-router-dom";
+import "../../style/component/card/CardAddProduct.sass";
 
-function CardAddProduct() {
-
-    return (
-        <div className="CardAddProduct__Container">
-            <Link to="/addproduct" >
-                <p>+</p>
-            </Link>
-        </div>
-
-    )
+function CardAddProduct({ onClick }) {
+  return (
+    <div className="CardAddProduct__Container" onClick={onClick}>
+      <div className="CardAddProduct__Content">
+        <p>+</p>
+      </div>
+    </div>
+  );
 }
 
-export default CardAddProduct
+export default CardAddProduct;

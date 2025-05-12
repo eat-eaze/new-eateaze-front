@@ -1,30 +1,29 @@
 @import '../../colors'
 
+#divBigModal__center
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 100%
+  height: 100%
+
 #divBigModal__Home
   min-height: 500px
-  width: 100%
+  width: 80%
+  max-width: 800px
+  background-color: $primary__background
+  border-radius: 20px
   display: flex
   flex-direction: column
-  //justify-content: center
   align-items: center
+  padding: 20px
   gap: 25px
   text-align: center
 
-  #divModal__textarea
-    gap: 25px
-    font-size: 16px
+  h1
+    margin-top: 10px
+    font-size: 1.8rem
     color: $primary__text
-
-    h1
-      font-size: 1.5rem
-      font-weight: 500
-      margin-bottom: 10px
-
-    h2
-      font-size: 1.2rem
-      font-weight: 400
-      margin-bottom: 10px
-
 
 #divBigModal__InputMain
   display: flex
@@ -32,42 +31,140 @@
   width: 80%
   min-height: 100px
   height: auto
+  gap: 20px
 
-  #divBigModal__InputText
-    display: flex
-    flex-direction: column
-    justify-content: space-between
+#divBigModal__InputText
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  flex: 1
+  
+  .form-group
+    margin-bottom: 15px
+    text-align: left
+    
+    label
+      display: block
+      margin-bottom: 5px
+      font-weight: bold
+      color: $primary__text
+    
+    select
+      width: 100%
+      padding: 8px 12px
+      border: 1px solid #ddd
+      border-radius: 5px
+      font-size: 0.9rem
+      background-color: white
+    
+    &.checkbox
+      display: flex
+      align-items: center
+      
+      input[type="checkbox"]
+        margin-right: 10px
+        width: 16px
+        height: 16px
+      
+      label
+        margin-bottom: 0
+        font-weight: normal
 
-  #divBigModal__InputImage
-    max-width: 250px
+#divBigModal__InputImage
+  max-width: 250px
+  width: 45%
+  display: flex
+  flex-direction: column
+  align-items: center
+  
+  .image-upload-label
+    margin-bottom: 10px
+    font-weight: bold
+    color: $primary__text
+  
+  .image-preview
+    margin-top: 15px
+    width: 100%
+    height: 150px
+    border-radius: 10px
+    overflow: hidden
+    
+    img
+      width: 100%
+      height: 100%
+      object-fit: cover
+  
+  .image-helper
+    margin-top: 15px
+    font-size: 0.8rem
+    color: #888
+    text-align: center
 
 #divBigModal__InputDescription
   width: 80%
+  
   textarea
     width: 100%
     height: 100px
+    border-radius: 5px
+    padding: 10px
+    border: 1px solid #ddd
+    resize: vertical
 
 #submit
-  width: calc(80% - 80px)
+  width: calc(80% - 20px)
   height: 50px
   display: flex
   flex-direction: row-reverse
+  margin-top: 20px
 
   button
-    width: 80px
+    width: 120px
     height: 50px
     background-color: $primary__text
-    color: $primary__background
+    color: $cta__text
     border: none
     border-radius: 5px
-    font-size: 1.2rem
+    font-size: 1.1rem
     font-weight: 500
     cursor: pointer
     transition: 0.3s
-    color: $cta__text
-
+    
     &:hover
-      background-color: $primary__text
-      color: $primary__background
-      border: 1px solid $primary__text
-      transition: 0.3s
+      background-color: darken($primary__text, 10%)
+      transform: translateY(-2px)
+    
+    &:disabled
+      background-color: #ccc
+      cursor: not-allowed
+      transform: none
+
+.error-message
+  color: #ff0000
+  background-color: #ffebee
+  padding: 10px
+  border-radius: 4px
+  margin: 10px 0
+  text-align: center
+  font-weight: bold
+
+.error-input
+  border: 2px solid #ff0000 !important
+  background-color: #ffebee !important
+
+  &:focus
+    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2) !important
+
+.success-message
+  text-align: center
+  margin-top: 20px
+  padding: 20px
+  
+  p
+    font-size: 1.2rem
+    margin-bottom: 10px
+    color: #4CAF50
+    
+    &:last-child
+      font-size: 1rem
+      color: #666

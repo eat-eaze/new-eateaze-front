@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../page/Home";
 import NotFound from "../page/NotFound";
@@ -10,32 +10,36 @@ import HomeCustomer from "../page/HomeCustomer";
 import HomeCustomerDetail from "../page/HomeCustomerDetail";
 import Profil from "../page/Profil";
 import MainLayout from "../layouts/MainLayout";
-import CartPage from '../page/CartPage';
+import CartPage from "../page/CartPage";
 import DetailProduct from "../page/DetailProduct";
-
+import PaymentPage from "../page/PaymentPage";
 function MainRouter() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                {/* Routes avec NavBar (utilisant MainLayout) */}
-                <Route element={<MainLayout />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/productor" element={<HomeProductor />} />
-                    <Route path="/addproduct" element={<AddProduct />} />
-                    <Route path="/customer" element={<HomeCustomer />} />
-                    <Route path="/customer/detail/:detail" element={<HomeCustomerDetail />} />
-                    <Route path="/profil/:idprofil" element={<Profil />} />
-                    <Route path="*" element={<NotFound />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="/product/:id" element={<DetailProduct />} />
-                </Route>
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Routes avec NavBar (utilisant MainLayout) */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/productor" element={<HomeProductor />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/customer" element={<HomeCustomer />} />
+          <Route
+            path="/customer/detail/:detail"
+            element={<HomeCustomerDetail />}
+          />
+          <Route path="/profil" element={<Profil />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/product/:id" element={<DetailProduct />} />
+          <Route path="/payment" element={<PaymentPage />} />
+        </Route>
 
-                {/* Routes sans NavBar */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-        </BrowserRouter>
-    )
+        {/* Routes sans NavBar */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default MainRouter
+export default MainRouter;

@@ -4,12 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import "../../style/component/other/navBar.sass";
 import "../../style/component/other/navBar-additions.sass";
 import "../../style/component/button/button.scss";
-import NavBarAdmin from "./NavBarAdmin";
-import NavBarClient from "./NavBarClient";
-import NavBarSupplier from "./NavBarSupplier";
-import { jwtDecode } from "jwt-decode";
 
-const NavBar = () => {
+const NavBarSupplier = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,25 +14,13 @@ const NavBar = () => {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const token =
-      document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1] ?? null;
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      .split("=")[1];
     if (token) {
       setIsLoggedIn(true);
     }
-
-    try {
-      const payload = jwtDecode(token);
-      setUserRole(payload.role ?? null);
-    } catch (e) {
-      console.error("Token invalide ou mal formé", e);
-      setUserRole(null);
-    }
-
-    console.log("userRole : ", userRole);
-
     setIsLoading(false);
   }, []);
 
@@ -59,21 +43,12 @@ const NavBar = () => {
   }
 
   if (userRole === "admin") {
-    console.log("userRole : ", userRole);
-    return <NavBarAdmin />;
+    return <div>Vous êtes un administrateur</div>;
   }
 
-  if (userRole === "RESTAURANT_USER") {
-    console.log("userRole : ", userRole);
-    return <NavBarClient />;
+  if (userRole === "user") {
+    return <div>Vous êtes un utilisateur</div>;
   }
-
-  if (userRole === "SUPPLIER_USER") {
-    console.log("userRole : ", userRole);
-    return <NavBarSupplier />;
-  }
-
-  console.log("userRole : ", userRole);
 
   return (
     <div
@@ -85,13 +60,31 @@ const NavBar = () => {
             <span className="logo-icon" role="img" aria-label="Ferme">
               🛡️
             </span>
-            <span className="logo-text">EATEAZE 2</span>
+            <span className="logo-text">EATEAZE 3</span>
           </Link>
         </div>
 
         <div className="nav-buttons">
           <Link to="/" className={`nav-button ${isActive("/")}`}>
             Accueil
+          </Link>
+        </div>
+
+        <div className="nav-buttons">
+          <Link
+            to="/productor"
+            className={`nav-button ${isActive("/productor")}`}
+          >
+            vos produits
+          </Link>
+        </div>
+
+        <div className="nav-buttons">
+          <Link
+            to="/addproduct"
+            className={`nav-button ${isActive("/addproduct")}`}
+          >
+            ajouter un produit
           </Link>
         </div>
 
@@ -131,4 +124,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBarSupplier;

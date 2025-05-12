@@ -1,50 +1,116 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import ModalProductDetail from '../Component/modal/ModalProductDetail'
-import '../style/component/modal/modalProductDetail.sass'
-
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import ModalProductDetail from "../Component/modal/ModalProductDetail";
+import { useCartStore } from "../store/cartStore";
+import "../style/component/modal/modalProductDetail.sass";
 
 function DetailProduct() {
-    const { id } = useParams() || 1;
-    const [product, setProduct] = useState(null);
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState(null);
+  const [varieties, setVarieties] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const addProduct = useCartStore((state) => state.addProduct);
 
-    useEffect(() => {
-        // const fetchProduct = async () => {
-        //     const response = await fetch(`/api/products/${id}`);
-        //     const data = await response.json();
-        //     setProduct(data);
-        // };
-        // fetchProduct();
-        setProduct({
-            id: 1,
-            img: "https://via.placeholder.com/150",
-            titleImg: "Titre de l'image",
-            title: "Titre",
-            description: "Description",
-            price: 10,
-            stock: 5
-        });
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/products/${id}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-    }, [id]);
+        if (!response.ok) {
+          throw new Error("Produit non trouvé");
+        }
 
-    if (!product) return null;
+        const data = await response.json();
+        console.log("Données reçues:", data);
 
+        if (!data || Object.keys(data).length === 0) {
+          throw new Error("Aucun produit associé à cet identifiant");
+        }
+
+        setProduct(data);
+
+        // Récupérer les variétés associées
+        if (data.productTypeId) {
+          const varietiesResponse = await fetch(
+            `http://localhost:3000/api/varieties/type-product/${data.productTypeId}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (varietiesResponse.ok) {
+            const varietiesData = await varietiesResponse.json();
+            setVarieties(varietiesData);
+          }
+        }
+
+        setError(null);
+      } catch (error) {
+        console.error("Erreur lors de la récupération du produit:", error);
+        setError(error.message || "Une erreur est survenue");
+        setProduct(null);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      addProduct({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: parseInt(quantity),
+      });
+    }
+  };
+
+  if (error) {
     return (
-        <div id="backgroundPage">
-            <div id="BigModal__center">
-                <ModalProductDetail
-                    id={product.id}
-                    img={product.img}
-                    titleImg={product.titleImg}
-                    title={product.title}
-                    description={product.description}
-                    price={product.price}
-                    stock={product.stock}
-                />
-            </div>
+      <div id="backgroundPage">
+        <div id="BigModal__center">
+          <div className="error-message">
+            <h2>{error}</h2>
+          </div>
         </div>
-    )
+      </div>
+    );
+  }
+
+  if (!product) return null;
+
+  return (
+    <div id="backgroundPage">
+      <div id="BigModal__center">
+        <ModalProductDetail
+          id={product.id}
+          img={product.image}
+          titleImg={product.name}
+          title={product.name}
+          description={product.description}
+          price={product.price}
+          stock={product.stock}
+          varieties={varieties}
+        />
+      </div>
+    </div>
+  );
 }
 
-export default DetailProduct
+export default DetailProduct;

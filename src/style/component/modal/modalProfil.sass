@@ -3,9 +3,11 @@
 #divModal__center
   #divModal__container
     display: flex
+    
 
     #divModalProfil__containerProduct
       width: 100%
+      display: none // changer quand sa sera implementer
       margin-top: 20px
 
       #divModalProfil__underTitle
@@ -16,4 +18,21 @@
       margin-top: 10px
       display: flex
       justify-content: space-between
+
+#button__logout
+  margin-top: 10px
+  text-align: center
+
+  background-color: $primary__text
+  color: $cta__text
+  border: none
+  border-radius: 5px
+  padding: 5px 10px
+  cursor: pointer
+  width: 100%
+  max-width: 200px
+
+  &:hover
+    background-color: $danger__text
+    color: $primary__background
 
