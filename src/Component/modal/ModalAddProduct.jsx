@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import InputLabel from "../input/InputLabel";
 import TextareaLabel from "../input/textareaLabel";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // URL de l'API - ajustée pour correspondre à la demande
 const API_BASE_URL = "http://localhost:3000/api";
@@ -20,9 +21,7 @@ function ModalAddProduct() {
   const [categories, setCategories] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
   const [varieties, setVarieties] = useState([]);
-  const [supplierId, setSupplierId] = useState(
-    "485393a1-742e-4946-bb00-158701121eec"
-  );
+  const [supplierId, setSupplierId] = useState("");
 
   // États pour les champs du formulaire
   const [nameProductInput, setNameProductInput] = useState("");
@@ -48,32 +47,37 @@ function ModalAddProduct() {
   const filteredVarieties = useMemo(() => {
     if (!productTypeId) return varieties;
     return varieties.filter(
-      (variety) => variety.productTypeId === productTypeId
+      (variety) => variety.product_type_id === productTypeId
     );
   }, [varieties, productTypeId]);
 
   // Récupérer l'ID du fournisseur à partir du JWT token
-  // useEffect(() => {
-  //   const authToken = localStorage.getItem("token");
-  //   if (!authToken) {
-  //     // Rediriger vers la page de connexion si pas de token
-  //     navigate("/login");
-  //     return;
-  //   }
-  //   try {
-  //     const decoded = jwtDecode(authToken);
-  //     if (!decoded.supplier_id) {
-  //       // Si pas de supplier_id dans le token, utiliser une valeur par défaut pour le développement
-  //       console.warn(
-  //         "Aucun supplier_id trouvé dans le token, utilisation d'une valeur par défaut"
-  //       );
-  //     } else {
-  //       setSupplierId(decoded.supplier_id);
-  //     }
-  //   } catch (error) {
-  //     console.error("Erreur lors du décodage du token:", error);
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const authToken = localStorage.getItem("token");
+    if (!authToken) {
+      // Rediriger vers la page de connexion si pas de token
+      navigate("/login");
+      return;
+    }
+    try {
+      const decoded = jwtDecode(authToken);
+      if (!decoded.supplier_id) {
+        // Si pas de supplier_id dans le token, utiliser une valeur par défaut pour le développement
+        console.warn(
+          "Aucun supplier_id trouvé dans le token, utilisation d'une valeur par défaut"
+        );
+        window.alert(
+          "Aucun supplier_id trouvé dans le token, utilisation d'une valeur par défaut"
+        );
+        setSupplierId("485393a1-742e-4946-bb00-158701121eec"); // Valeur par défaut
+      } else {
+        setSupplierId(decoded.supplier_id);
+      }
+    } catch (error) {
+      console.error("Erreur lors du décodage du token:", error);
+      setSupplierId("485393a1-742e-4946-bb00-158701121eec"); // Valeur par défaut en cas d'erreur
+    }
+  }, [navigate]);
 
   // Charger les données de référence (catégories, types, etc.)
   useEffect(() => {
@@ -87,7 +91,7 @@ function ModalAddProduct() {
         if (!categoriesResponse.ok)
           throw new Error("Erreur lors du chargement des catégories");
         const categoriesData = await categoriesResponse.json();
-        setCategories(categoriesData.filter((cat) => cat.isActive));
+        setCategories(categoriesData.filter((cat) => cat.is_active));
 
         // Récupérer les types de produits
         const productTypesResponse = await fetch(
@@ -96,7 +100,7 @@ function ModalAddProduct() {
         if (!productTypesResponse.ok)
           throw new Error("Erreur lors du chargement des types de produits");
         const productTypesData = await productTypesResponse.json();
-        setProductTypes(productTypesData.filter((type) => type.isActive));
+        setProductTypes(productTypesData.filter((type) => type.is_active));
 
         // Récupérer les variétés
         const varietiesResponse = await fetch(`${API_BASE_URL}/varieties`);
@@ -104,7 +108,7 @@ function ModalAddProduct() {
           throw new Error("Erreur lors du chargement des variétés");
         const varietiesData = await varietiesResponse.json();
         console.log("varietiesData : ", varietiesData);
-        setVarieties(varietiesData.filter((variety) => variety.isActive));
+        setVarieties(varietiesData.filter((variety) => variety.is_active));
 
         // Définir des valeurs par défaut si des données sont disponibles
         if (categoriesData.length > 0) {
@@ -331,7 +335,7 @@ function ModalAddProduct() {
       // Préparer les données à envoyer exactement comme attendu par l'API
       const productData = {
         category_id: categoryId,
-        productTypeId: productTypeId, // Note: c'est productTypeId et non product_type_id
+        product_type_id: productTypeId,
         variety_id: varietyId,
         name: nameProductInput.trim(),
         supplier_id: supplierId,

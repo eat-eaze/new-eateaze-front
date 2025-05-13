@@ -8,6 +8,7 @@ import NavBarAdmin from "./NavBarAdmin";
 import NavBarClient from "./NavBarClient";
 import NavBarSupplier from "./NavBarSupplier";
 import { jwtDecode } from "jwt-decode";
+import logo from "../../assets/logo.png";
 
 const NavBar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -82,10 +83,12 @@ const NavBar = () => {
       <nav className="navbar">
         <div className="nav-logo">
           <Link to="/" className="logo-wrapper">
-            <span className="logo-icon" role="img" aria-label="Ferme">
-              🛡️
-            </span>
-            <span className="logo-text">EATEAZE 2</span>
+            <img
+              src={logo}
+              alt="Logo Eateaze"
+              className="nav-logo-image"
+              style={{ height: "calc( 50px + 1em )", width: "100%" }}
+            />
           </Link>
         </div>
 

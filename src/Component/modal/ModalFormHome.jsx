@@ -1,7 +1,6 @@
 import "../../style/component/modal/modal.sass";
 import "../../style/component/modal/modalHome.sass";
 import logo from "../../assets/logo/tous_a_la_ferme_logo_fond_blanc.png";
-
 function ModalForm() {
   return (
     <>
@@ -18,7 +17,16 @@ function ModalForm() {
             </h2>
           </div>
           <div id="Modal__login">
-            <p>GROS BTN POUR SE CONNECTER DE Théo</p>
+            {/* big btn pour se connecter */}
+            <button
+              id="btnModal__login"
+              style={{ width: "300px" }}
+              onClick={() => {
+                window.location.href = "/login";
+              }}
+            >
+              Se connecter
+            </button>
           </div>
         </div>
       </div>

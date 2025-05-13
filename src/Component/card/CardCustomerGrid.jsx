@@ -16,13 +16,13 @@ function CardCustomerGrid() {
       try {
         setLoading(true);
         const response = await fetch("http://localhost:3000/api/products");
-
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
 
         const data = await response.json();
         console.log("Produits récupérés Oui :", data.products);
+
         setProducts(data.products);
       } catch (err) {
         console.error("Erreur lors de la récupération des produits:", err);

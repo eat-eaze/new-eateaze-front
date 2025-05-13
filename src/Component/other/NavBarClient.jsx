@@ -4,6 +4,7 @@ import "../../style/component/other/navBar.sass";
 import "../../style/component/other/navBar-additions.sass";
 import "../../style/component/button/button.scss";
 import { jwtDecode } from "jwt-decode";
+import logo from "../../assets/logo.png";
 
 const NavBarClient = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -47,10 +48,12 @@ const NavBarClient = () => {
       <nav className="navbar">
         <div className="nav-logo">
           <Link to="/" className="logo-wrapper">
-            <span className="logo-icon" role="img" aria-label="Ferme">
-              🥗
-            </span>
-            <span className="logo-text">TousALaFerme</span>
+            <img
+              src={logo}
+              alt="Logo Eateaze"
+              className="nav-logo-image"
+              style={{ height: "calc( 50px + 1em )", width: "100%" }}
+            />
           </Link>
         </div>
         <div className="nav-buttons">

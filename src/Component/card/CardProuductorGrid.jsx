@@ -4,6 +4,7 @@ import CardProductView from "./CardProductView";
 import "../../style/component/card/cardProductorGrid.sass";
 import CardAddProduct from "./CardAddProduct";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // URL de l'API - permet de facilement changer l'environnement (dev, prod, etc.)
 const API_URL = "http://localhost:3000/api/products";
@@ -20,7 +21,7 @@ function CardProuductorGrid() {
     category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0", // Valeur par défaut pour la catégorie
     product_type_id: "4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d", // Valeur par défaut pour le type
     variety_id: "df93180f-dac7-4122-8e97-d81c1674cbc4", // Valeur par défaut pour la variété
-    supplier_id: "485393a1-742e-4946-bb00-158701121eec", // Valeur par défaut pour le fournisseur
+    supplier_id: "", // Sera défini par l'ID du producteur dans le token
     unit: "KG",
     is_organic: false,
     is_available: true,
@@ -28,6 +29,7 @@ function CardProuductorGrid() {
   const [isAdding, setIsAdding] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [producerId, setProducerId] = useState(null);
 
   // Données de référence
   const [categories, setCategories] = useState([
@@ -51,11 +53,55 @@ function CardProuductorGrid() {
   ]);
 
   useEffect(() => {
+    // Récupérer l'ID du producteur depuis le token dans le cookie
+    const getProducerIdFromToken = () => {
+      try {
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (!token) {
+          navigate("/login");
+          return null;
+        }
+
+        const decoded = jwtDecode(token);
+        if (decoded.role !== "SUPPLIER_USER") {
+          navigate("/");
+          return null;
+        }
+
+        return decoded.id; // ID du producteur
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération de l'ID du producteur:",
+          error
+        );
+        navigate("/login");
+        return null;
+      }
+    };
+
+    const producerId = getProducerIdFromToken();
+    if (producerId) {
+      setProducerId(producerId);
+      // Mettre à jour le supplier_id par défaut dans newProduct
+      setNewProduct((prev) => ({
+        ...prev,
+        supplier_id: producerId,
+      }));
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const fetchProducts = async () => {
+      if (!producerId) return; // Ne pas continuer si on n'a pas l'ID du producteur
+
       setLoading(true);
       try {
-        // Utilisation de l'API réelle
-        const response = await fetch(`${API_URL}`);
+        // Utilisation de l'API réelle avec le filtre sur l'ID du producteur
+        const response = await fetch(`${API_URL}/supplier_id/${producerId}`);
 
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
@@ -68,65 +114,15 @@ function CardProuductorGrid() {
       } catch (error) {
         console.error("Erreur lors de la récupération des produits:", error);
         setError(`Impossible de charger les produits: ${error.message}`);
-
-        // Utiliser des données fictives en cas d'erreur pour permettre le développement sans backend
-        console.log("Utilisation de données fictives suite à l'erreur");
-        const mockData = [
-          {
-            id: "1",
-            name: "Tomate Bio",
-            description: "Tomates bio cultivées localement",
-            price: "2.99",
-            stock: "100",
-            image: "https://cataas.com/cat?t=12345",
-            category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0",
-            product_type_id: "4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d",
-            variety_id: "df93180f-dac7-4122-8e97-d81c1674cbc4",
-            supplier_id: "485393a1-742e-4946-bb00-158701121eec",
-            unit: "KG",
-            is_organic: true,
-            is_available: true,
-          },
-          {
-            id: "2",
-            name: "Concombre",
-            description: "Concombres frais de saison",
-            price: "1.50",
-            stock: "75",
-            image: "https://cataas.com/cat?t=67890",
-            category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0",
-            product_type_id: "4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d",
-            variety_id: "df93180f-dac7-4122-8e97-d81c1674cbc4",
-            supplier_id: "485393a1-742e-4946-bb00-158701121eec",
-            unit: "KG",
-            is_organic: false,
-            is_available: true,
-          },
-          {
-            id: "3",
-            name: "Carotte",
-            description: "Carottes bio de nos producteurs",
-            price: "1.80",
-            stock: "120",
-            image: "https://cataas.com/cat?t=24680",
-            category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0",
-            product_type_id: "5e597367-bfe5-5c0d-0bf3-6f4cg2f0c91e",
-            variety_id: "eg04291g-ebd8-5233-9f08-e92d2785dcd5",
-            supplier_id: "596404b2-853f-5057-cc11-269812232ffd",
-            unit: "KG",
-            is_organic: true,
-            is_available: true,
-          },
-        ];
-
-        setProducts(mockData);
+        setProducts([]); // Réinitialiser les produits à un tableau vide en cas d'erreur
+        // Les données fictives ont été supprimées
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [producerId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -164,7 +160,7 @@ function CardProuductorGrid() {
       formData.append("category_id", newProduct.category_id);
       formData.append("product_type_id", newProduct.product_type_id);
       formData.append("variety_id", newProduct.variety_id);
-      formData.append("supplier_id", newProduct.supplier_id);
+      formData.append("supplier_id", producerId); // Utiliser l'ID du producteur
       formData.append("unit", newProduct.unit);
       formData.append("is_organic", newProduct.is_organic);
       formData.append("is_available", newProduct.is_available);
@@ -234,7 +230,7 @@ function CardProuductorGrid() {
         category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0",
         product_type_id: "4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d",
         variety_id: "df93180f-dac7-4122-8e97-d81c1674cbc4",
-        supplier_id: "485393a1-742e-4946-bb00-158701121eec",
+        supplier_id: "",
         unit: "KG",
         is_organic: false,
         is_available: true,
@@ -245,15 +241,8 @@ function CardProuductorGrid() {
       console.error("Erreur lors de l'ajout du produit:", error);
       setError(`Erreur lors de l'ajout du produit: ${error.message}`);
 
-      // Ajouter avec un ID fictif en cas d'erreur
-      const fakeId = Date.now().toString();
-      const productWithImage = {
-        ...newProduct,
-        id: fakeId,
-        image: newProduct.image || `https://cataas.com/cat?t=${fakeId}`,
-      };
+      // Ne pas ajouter de produit fictif en cas d'erreur
 
-      setProducts([...products, productWithImage]);
       setNewProduct({
         name: "",
         description: "",
@@ -263,7 +252,7 @@ function CardProuductorGrid() {
         category_id: "6aa29b0d-0234-40d8-83c9-f24e9742bbf0",
         product_type_id: "4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d",
         variety_id: "df93180f-dac7-4122-8e97-d81c1674cbc4",
-        supplier_id: "485393a1-742e-4946-bb00-158701121eec",
+        supplier_id: "",
         unit: "KG",
         is_organic: false,
         is_available: true,

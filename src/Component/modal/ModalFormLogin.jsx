@@ -85,7 +85,7 @@ function ModalFormLogin() {
               width: "90%",
             }}
           >
-            Boutton de Théo
+            Se connecter
           </button>
         </div>
       </div>

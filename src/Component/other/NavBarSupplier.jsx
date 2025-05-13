@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import "../../style/component/other/navBar.sass";
 import "../../style/component/other/navBar-additions.sass";
 import "../../style/component/button/button.scss";
+import logo from "../../assets/logo.png";
 
 const NavBarSupplier = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -57,10 +58,12 @@ const NavBarSupplier = () => {
       <nav className="navbar">
         <div className="nav-logo">
           <Link to="/" className="logo-wrapper">
-            <span className="logo-icon" role="img" aria-label="Ferme">
-              🛡️
-            </span>
-            <span className="logo-text">EATEAZE 3</span>
+            <img
+              src={logo}
+              alt="Logo Eateaze"
+              className="nav-logo-image"
+              style={{ height: "calc( 50px + 1em )", width: "100%" }}
+            />
           </Link>
         </div>
 
@@ -75,7 +78,7 @@ const NavBarSupplier = () => {
             to="/productor"
             className={`nav-button ${isActive("/productor")}`}
           >
-            vos produits
+            Mes Produits
           </Link>
         </div>
 
@@ -84,7 +87,7 @@ const NavBarSupplier = () => {
             to="/addproduct"
             className={`nav-button ${isActive("/addproduct")}`}
           >
-            ajouter un produit
+            Ajouter un Produit
           </Link>
         </div>
 
