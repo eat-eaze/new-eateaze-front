@@ -61,10 +61,10 @@ function CardProuductorGrid() {
           .find((row) => row.startsWith("token="))
           ?.split("=")[1];
 
-        if (!token) {
-          navigate("/login");
-          return null;
-        }
+        // if (!token) {
+        //   navigate("/login");
+        //   return null;
+        // }
 
         const decoded = jwtDecode(token);
         if (decoded.role !== "SUPPLIER_USER") {
@@ -78,7 +78,7 @@ function CardProuductorGrid() {
           "Erreur lors de la récupération de l'ID du producteur:",
           error
         );
-        navigate("/login");
+        // navigate("/login");
         return null;
       }
     };

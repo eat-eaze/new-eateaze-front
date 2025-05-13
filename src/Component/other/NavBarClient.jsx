@@ -75,11 +75,11 @@ const NavBarClient = () => {
           </Link>
         </div>
 
-        <div className="nav-buttons">
+        {/* <div className="nav-buttons">
           <Link to="/payment" className={`nav-button ${isActive("/payment")}`}>
             Mes commandes
           </Link>
-        </div>
+        </div> */}
 
         <div className="auth-buttons">
           <Link to={`/profil`} className="button button--profile">

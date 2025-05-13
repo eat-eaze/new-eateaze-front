@@ -56,7 +56,7 @@ function ModalAddProduct() {
     const authToken = localStorage.getItem("token");
     if (!authToken) {
       // Rediriger vers la page de connexion si pas de token
-      navigate("/login");
+      // navigate("/login");
       return;
     }
     try {
