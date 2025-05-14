@@ -58,6 +58,15 @@
         font-weight: bold
         padding-bottom: 5px
         cursor: pointer
+        transition: all 0.3s ease
+        
+        // Spécifique pour le bouton "-"
+        &:last-child
+          background-color: #888888
+          color: white
+          
+          &:hover
+            background-color: $cta__background
 
       .CardCustomer__stockText
         color: $primary__text

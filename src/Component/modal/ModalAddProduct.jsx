@@ -3,11 +3,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import InputLabel from "../input/InputLabel";
 import TextareaLabel from "../input/textareaLabel";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-
-// URL de l'API - ajustée pour correspondre à la demande
-const API_BASE_URL = "http://localhost:3000/api";
-const API_URL = `${API_BASE_URL}/products`;
+import { API_URL, getDefaultHeaders } from "../../config/config";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function ModalAddProduct() {
   const navigate = useNavigate();
@@ -51,81 +49,80 @@ function ModalAddProduct() {
     );
   }, [varieties, productTypeId]);
 
-  // Récupérer l'ID du fournisseur à partir du JWT token
   useEffect(() => {
-    const authToken = localStorage.getItem("token");
-    if (!authToken) {
-      // Rediriger vers la page de connexion si pas de token
-      // navigate("/login");
-      return;
-    }
-    try {
-      const decoded = jwtDecode(authToken);
-      if (!decoded.supplier_id) {
-        // Si pas de supplier_id dans le token, utiliser une valeur par défaut pour le développement
-        console.warn(
-          "Aucun supplier_id trouvé dans le token, utilisation d'une valeur par défaut"
-        );
-        window.alert(
-          "Aucun supplier_id trouvé dans le token, utilisation d'une valeur par défaut"
-        );
-        setSupplierId("485393a1-742e-4946-bb00-158701121eec"); // Valeur par défaut
-      } else {
-        setSupplierId(decoded.supplier_id);
-      }
-    } catch (error) {
-      console.error("Erreur lors du décodage du token:", error);
-      setSupplierId("485393a1-742e-4946-bb00-158701121eec"); // Valeur par défaut en cas d'erreur
-    }
-  }, [navigate]);
+    const fetchUserProfile = async () => {
+      try {
+        const token = Cookies.get("token");
 
-  // Charger les données de référence (catégories, types, etc.)
+        if (!token) {
+          console.warn("Aucun token d'authentification trouvé");
+          setError("Vous devez être connecté pour ajouter un produit");
+          return;
+        }
+
+        // Récupérer le profil utilisateur
+        const response = await axios.get(`${API_URL}/users/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const userData = response.data.user;
+        console.log("Profil utilisateur récupéré:", userData);
+
+        if (userData.role !== "SUPPLIER_USER") {
+          setError("Vous devez être un fournisseur pour ajouter des produits");
+          return;
+        }
+
+        if (userData.supplierLinks && userData.supplierLinks.length > 0) {
+          const supplierId = userData.supplierLinks[0].supplier_id;
+          console.log("ID fournisseur récupéré:", supplierId);
+          setSupplierId(supplierId);
+        } else {
+          console.warn("Aucun lien fournisseur trouvé pour cet utilisateur");
+          setError("Votre compte n'est associé à aucun fournisseur");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération du profil:", error);
+        setError("Impossible de récupérer vos informations de fournisseur");
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   useEffect(() => {
     const fetchReferenceData = async () => {
       setLoadingData(true);
       setError("");
 
       try {
-        // Récupérer les catégories
-        const categoriesResponse = await fetch(`${API_BASE_URL}/categories`);
+        const categoriesResponse = await fetch(`${API_URL}/categories`);
         if (!categoriesResponse.ok)
           throw new Error("Erreur lors du chargement des catégories");
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData.filter((cat) => cat.is_active));
 
-        // Récupérer les types de produits
-        const productTypesResponse = await fetch(
-          `${API_BASE_URL}/product-types`
-        );
+        const productTypesResponse = await fetch(`${API_URL}/product-types`);
         if (!productTypesResponse.ok)
           throw new Error("Erreur lors du chargement des types de produits");
         const productTypesData = await productTypesResponse.json();
         setProductTypes(productTypesData.filter((type) => type.is_active));
 
-        // Récupérer les variétés
-        const varietiesResponse = await fetch(`${API_BASE_URL}/varieties`);
+        const varietiesResponse = await fetch(`${API_URL}/varieties`);
         if (!varietiesResponse.ok)
           throw new Error("Erreur lors du chargement des variétés");
         const varietiesData = await varietiesResponse.json();
         console.log("varietiesData : ", varietiesData);
         setVarieties(varietiesData.filter((variety) => variety.is_active));
 
-        // Définir des valeurs par défaut si des données sont disponibles
         if (categoriesData.length > 0) {
           setCategoryId(
             categoriesData[0].id || "6aa29b0d-0234-40d8-83c9-f24e9742bbf0"
           );
         } else {
           setCategoryId("6aa29b0d-0234-40d8-83c9-f24e9742bbf0");
-        }
-
-        // Valeurs par défaut pour le développement
-        if (productTypesData.length === 0) {
-          setProductTypeId("4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d");
-        }
-
-        if (varietiesData.length === 0) {
-          setVarietyId("df93180f-dac7-4122-8e97-d81c1674cbc4");
         }
       } catch (error) {
         console.error(
@@ -136,7 +133,6 @@ function ModalAddProduct() {
           "Impossible de charger les données de référence: " + error.message
         );
 
-        // Valeurs par défaut pour le développement
         setCategoryId("6aa29b0d-0234-40d8-83c9-f24e9742bbf0");
         setProductTypeId("4d486256-afd4-4b9c-9ae2-5e3bf1e9b80d");
         setVarietyId("df93180f-dac7-4122-8e97-d81c1674cbc4");
@@ -148,7 +144,6 @@ function ModalAddProduct() {
     fetchReferenceData();
   }, []);
 
-  // Mettre à jour le type de produit lorsque la catégorie change
   useEffect(() => {
     if (categoryId && filteredProductTypes.length > 0) {
       setProductTypeId(filteredProductTypes[0].id);
@@ -157,7 +152,6 @@ function ModalAddProduct() {
     }
   }, [categoryId, filteredProductTypes]);
 
-  // Mettre à jour la variété lorsque le type de produit change
   useEffect(() => {
     if (productTypeId && filteredVarieties.length > 0) {
       setVarietyId(filteredVarieties[0].id);
@@ -166,7 +160,6 @@ function ModalAddProduct() {
     }
   }, [productTypeId, filteredVarieties]);
 
-  // Mettre à jour l'aperçu de l'image lorsque l'URL change
   useEffect(() => {
     if (imageUrl) {
       setImagePreview(imageUrl);
@@ -175,7 +168,6 @@ function ModalAddProduct() {
     }
   }, [imageUrl]);
 
-  // Fonction pour générer une URL d'image de chat aléatoire
   const getUniqueImageUrl = () => {
     const timestamp = Date.now();
     const randomNum = Math.floor(Math.random() * 1000);
@@ -351,32 +343,51 @@ function ModalAddProduct() {
       };
 
       console.log("Envoi du produit à l'API:", productData);
+      console.log("Headers:", getDefaultHeaders());
+      console.log("URL:", `${API_URL}/products`);
 
-      // Appel à l'API
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
-        body: JSON.stringify(productData),
-      });
+      // Utiliser axios au lieu de fetch
+      try {
+        const response = await axios.post(`${API_URL}/products`, productData, {
+          headers: getDefaultHeaders(),
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
+        console.log("Produit ajouté avec succès:", response.data);
+
+        setSuccess(true);
+        setLoading(false);
+
+        // Redirection après 2 secondes
+        setTimeout(() => {
+          navigate("/productor");
+        }, 2000);
+      } catch (axiosError) {
+        console.log("Erreur axios détaillée:", axiosError);
+
+        if (axiosError.response) {
+          // La requête a été faite et le serveur a répondu avec un code d'erreur
+          console.log("Données d'erreur:", axiosError.response.data);
+          console.log("Status d'erreur:", axiosError.response.status);
+          console.log("En-têtes d'erreur:", axiosError.response.headers);
+
+          throw new Error(
+            axiosError.response.data?.message ||
+              `Erreur HTTP: ${axiosError.response.status}`
+          );
+        } else if (axiosError.request) {
+          // La requête a été faite mais aucune réponse n'a été reçue
+          console.log("Requête sans réponse:", axiosError.request);
+          throw new Error(
+            "Aucune réponse du serveur. Vérifiez votre connexion."
+          );
+        } else {
+          // Une erreur s'est produite lors de la configuration de la requête
+          console.log("Erreur de configuration:", axiosError.message);
+          throw new Error(
+            `Erreur lors de la configuration: ${axiosError.message}`
+          );
+        }
       }
-
-      const result = await response.json();
-      console.log("Produit ajouté avec succès:", result);
-
-      setSuccess(true);
-      setLoading(false);
-
-      // Redirection après 2 secondes
-      setTimeout(() => {
-        navigate("/productor");
-      }, 2000);
     } catch (error) {
       console.error("Erreur lors de l'ajout du produit:", error);
       if (error.message.includes("Network Error")) {

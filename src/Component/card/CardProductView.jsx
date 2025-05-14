@@ -2,9 +2,7 @@ import React, { useMemo, useState } from "react";
 // import img from '../assets/img.png';
 import "../../style/component/card/cardProductView.sass";
 import { FaTrash } from "react-icons/fa";
-
-// URL de l'API
-const API_BASE_URL = "http://localhost:3000/api";
+import { API_URL, getDefaultHeaders } from "../../config/config";
 
 /**
  * Génère une URL unique pour l'image du chat afin d'éviter la mise en cache
@@ -49,11 +47,9 @@ function CardProductView({ product, onDelete }) {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+      const response = await fetch(`${API_URL}/products/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
+        headers: getDefaultHeaders(),
       });
 
       if (!response.ok) {

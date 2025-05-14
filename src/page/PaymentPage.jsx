@@ -1,13 +1,13 @@
 import "../style/page/cartPage.sass";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL, getDefaultHeaders } from "../config/config";
 
 function PaymentPage() {
   const [varietyData, setVarietyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
   const varietyId = "13542c84-13e0-4cc5-9854-d64fc3d49031"; // ID de la variété à récupérer
 
   useEffect(() => {
@@ -21,11 +21,9 @@ function PaymentPage() {
         }
 
         const response = await axios.get(
-          `${baseUrl}/products/varieties/${varietyId}`,
+          `${API_BASE_URL}/products/varieties/${varietyId}`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: getDefaultHeaders(),
           }
         );
 
@@ -39,7 +37,7 @@ function PaymentPage() {
     };
 
     fetchVarietyData();
-  }, [baseUrl, varietyId]);
+  }, [varietyId]);
 
   return (
     <div id="backgroundPage">

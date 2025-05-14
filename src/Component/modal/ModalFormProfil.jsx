@@ -3,9 +3,7 @@ import "../../style/component/modal/modal.sass";
 import LoyaltyCard from "../other/LoyaltyCard";
 import CardProfil from "../card/CardProfil";
 import { useState, useEffect } from "react";
-
-// URL de l'API
-const API_BASE_URL = "http://localhost:3000/api";
+import { API_URL } from "../../config/config";
 
 function ModalFormProfil() {
   const [userData, setUserData] = useState(null);
@@ -30,7 +28,7 @@ function ModalFormProfil() {
         console.log("token :", token);
 
         // Essayer d'abord avec 'profile'
-        let response = await fetch(`${API_BASE_URL}/users/profile`, {
+        let response = await fetch(`${API_URL}/users/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +36,7 @@ function ModalFormProfil() {
 
         // Si 404, essayer avec 'me'
         if (response.status === 404) {
-          response = await fetch(`${API_BASE_URL}/users/me`, {
+          response = await fetch(`${API_URL}/users/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -47,7 +45,7 @@ function ModalFormProfil() {
 
         // Si toujours 404, essayer sans 's' dans users
         if (response.status === 404) {
-          response = await fetch(`${API_BASE_URL}/user/profile`, {
+          response = await fetch(`${API_URL}/user/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

@@ -1,13 +1,11 @@
 import axios from "axios";
+import { API_URL } from "../config/config";
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
-
-console.log("API_BASE_URL : ", API_BASE_URL);
+console.log("API_BASE_URL : ", API_URL);
 
 const handleLogin = async (email, password) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/users/login`, {
+    const response = await axios.post(`${API_URL}/users/login`, {
       identifier: email,
       password: password,
     });
@@ -27,7 +25,7 @@ const handleLogin = async (email, password) => {
 };
 
 const handleRegister = async (formData) => {
-  console.log("url : ", `${API_BASE_URL}/api/users/signup`);
+  console.log("url : ", `${API_URL}/users/signup`);
 
   try {
     const requestData = {
@@ -54,10 +52,7 @@ const handleRegister = async (formData) => {
       requestData.invitationCode = formData.invitationCode;
     }
 
-    const response = await axios.post(
-      `${API_BASE_URL}/api/users/signup`,
-      requestData
-    );
+    const response = await axios.post(`${API_URL}/users/signup`, requestData);
 
     console.log("Réponse d'inscription:", response);
 
