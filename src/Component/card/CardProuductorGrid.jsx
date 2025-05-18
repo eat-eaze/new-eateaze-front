@@ -5,8 +5,8 @@ import "../../style/component/card/cardProductorGrid.sass";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/config";
 import Cookies from "js-cookie";
-import { getDefaultHeaders } from "../../utils/authUtils";
-  
+import { getDefaultHeaders } from "../../config/config";
+
 function CardProuductorGrid() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
