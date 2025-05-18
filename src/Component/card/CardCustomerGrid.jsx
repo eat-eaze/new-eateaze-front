@@ -5,8 +5,6 @@ import CardProductCustomer from "./CardProductCustomer";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCartStore } from "../../store/cartStore";
 import { API_URL, getDefaultHeaders } from "../../config/config";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 
 function CardCustomerGrid() {
   const { cart, addProduct, updateQuantity } = useCartStore();
@@ -15,34 +13,22 @@ function CardCustomerGrid() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const cookie = Cookies.get("token");
-    const token = cookie.replace("Bearer ", "");
-
-    if (!token) {
-      console.log("No token found");
-      return;
-    }
-
-    const supplierId = jwtDecode(token).supplier_id;
-
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const productsResponse = await fetch(
-          `${API_URL}/products/supplier/${supplierId}`,
-          {
-            method: "GET",
-            headers: getDefaultHeaders(),
-            credentials: "include"
-          }
-        );
-        if (!productsResponse.ok) {
-          throw new Error(`Erreur HTTP: ${productsResponse.status}`);
+        const response = await fetch(`${API_URL}/products`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
         }
-        const data = await productsResponse.json();
-        const products = Array.isArray(data.products) ? data.products : [];
-        console.log("Produits du fournisseur récupérés:", products);
-        setProducts(products);
+
+        const data = await response.json();
+        console.log("Produits récupérés Oui :", data.products);
+
+        setProducts(data.products);
       } catch (err) {
         console.error("Erreur lors de la récupération des produits:", err);
         setError("Impossible de charger les produits");

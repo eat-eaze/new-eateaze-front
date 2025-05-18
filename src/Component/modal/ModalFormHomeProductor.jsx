@@ -2,7 +2,6 @@ import "../../style/component/modal/modalHomeProductor.sass";
 import CardProuductorGrid from "../card/CardProuductorGrid";
 import { useEffect, useState } from "react";
 import { API_URL, getDefaultHeaders } from "../../config/config";
-
 function ModalFormHomeProductor() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
