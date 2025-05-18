@@ -81,6 +81,7 @@ function CardProuductorGrid() {
 
       setLoading(true);
       try {
+        console.log("supplierId", supplierId);
         // Appel à l'API pour récupérer les produits du fournisseur
         const productsResponse = await fetch(
           `${API_URL}/products/supplier/${supplierId}`,
