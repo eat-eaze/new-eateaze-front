@@ -40,7 +40,7 @@ export const getDefaultHeaders = (includeAuth = true) => {
     // Récupérer le token depuis les cookies
     const match = document.cookie.match(/(^|;\s*)token=([^;]*)/);
     const token = match ? decodeURIComponent(match[2]) : null;
-    console.log(token);
+    console.log("token prod :", token);
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
