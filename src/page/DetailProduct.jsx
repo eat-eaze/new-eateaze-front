@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ModalProductDetail from "../Component/modal/ModalProductDetail";
 import { useCartStore } from "../store/cartStore";
 import "../style/component/modal/modalProductDetail.sass";
+import { API_URL } from "../config/config";
 
 function DetailProduct() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ function DetailProduct() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/products/${id}`,
+          `${API_URL}/products/${id}`,
           {
             method: "GET",
             headers: {
@@ -43,7 +44,7 @@ function DetailProduct() {
         // Récupérer les variétés associées
         if (data.productTypeId) {
           const varietiesResponse = await fetch(
-            `http://localhost:3000/api/varieties/type-product/${data.productTypeId}`,
+            `${API_URL}/varieties/type-product/${data.productTypeId}`,
             {
               method: "GET",
               headers: {

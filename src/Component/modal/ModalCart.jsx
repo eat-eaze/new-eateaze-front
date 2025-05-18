@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../../style/component/modal/modalCart.sass";
 import { useCartStore } from "../../store/cartStore";
 import { FaShoppingCart } from "react-icons/fa";
+import { API_URL } from "../../config/config";
 
 // Fonction pour générer des images de chat uniques
 const getUniqueImageUrl = () => {
@@ -31,7 +32,7 @@ function ModalCart() {
       setLoading(true);
       try {
         // Récupérer TOUS les produits
-        const response = await fetch("http://localhost:3000/api/products");
+        const response = await fetch(`${API_URL}/products`);
         let products = await response.json();
         products = products.products;
         console.log("Tous les produits récupérés:", products);
@@ -100,7 +101,7 @@ function ModalCart() {
     const fetchUserProfile = async () => {
       setLoadingProfile(true);
       try {
-        const response = await fetch("http://localhost:3000/api/user/profile");
+        const response = await fetch(`${API_URL}/user/profile`);
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération du profil");
         }
@@ -179,7 +180,7 @@ function ModalCart() {
         })),
       };
 
-      const response = await fetch("http://localhost:3000/api/orders", {
+      const response = await fetch(`${API_URL}/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

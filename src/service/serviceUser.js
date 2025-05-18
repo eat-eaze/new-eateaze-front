@@ -5,6 +5,7 @@ console.log("API_BASE_URL : ", API_URL);
 
 const handleLogin = async (email, password) => {
   try {
+    console.log("api : ", `${API_URL}`);
     const response = await axios.post(`${API_URL}/users/login`, {
       identifier: email,
       password: password,
