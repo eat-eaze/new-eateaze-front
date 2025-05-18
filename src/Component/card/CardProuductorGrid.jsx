@@ -32,6 +32,7 @@ function CardProuductorGrid() {
         const profileResponse = await axios.get(`${API_URL}/users/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
+            withCredentials: true,
           },
         });
 
@@ -80,6 +81,7 @@ function CardProuductorGrid() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              withCredentials: true,
             },
           }
         );
