@@ -57,8 +57,6 @@ function CardProuductorGrid() {
         // Trouver le supplier_id dans les liens fournisseur
         if (userData.supplierLinks && userData.supplierLinks.length > 0) {
           console.log("userData.supplierLinks", userData.supplierLinks);
-          console.log("userData.supplierLinks 0 :", userData.supplierLinks[0]);
-          console.log("userData.supplierLinks[0].supplier_id", userData.supplierLinks[0].supplier_id);
           const supplierId = userData.supplierLinks[0].supplier_id;
           console.log("ID fournisseur récupéré:", supplierId);
           setSupplierId(supplierId);
@@ -83,9 +81,6 @@ function CardProuductorGrid() {
 
       setLoading(true);
       try {
-        // Récupérer le token depuis les cookies
-        const token = Cookies.get("token");
-
         // Appel à l'API pour récupérer les produits du fournisseur
         const productsResponse = await fetch(
           `${API_URL}/products/my-supplier-products`,
