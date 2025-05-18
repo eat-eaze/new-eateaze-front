@@ -4,7 +4,7 @@ import "../../style/component/card/cardProductorGrid.sass";
 import CardProductCustomer from "./CardProductCustomer";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCartStore } from "../../store/cartStore";
-import { API_URL, fetchConfig } from "../../config/config";
+import { API_URL, getDefaultHeaders } from "../../config/config";
 
 function CardCustomerGrid() {
   const { cart, addProduct, updateQuantity } = useCartStore();
@@ -16,7 +16,11 @@ function CardCustomerGrid() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/products`, fetchConfig);
+        const response = await fetch(`${API_URL}/products`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
