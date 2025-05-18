@@ -34,11 +34,12 @@ function CardProuductorGrid() {
           headers: getDefaultHeaders(),
           credentials: "include"
         });
+        
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
         console.log("response", response);
-        
+
         const profileResponse = await response.json();
 
         console.log("profileResponse", profileResponse.data);

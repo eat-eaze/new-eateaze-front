@@ -16,19 +16,21 @@ function CardCustomerGrid() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/products`, {
-          method: "GET",
-          headers: getDefaultHeaders(),
-          credentials: "include"
-        });
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP: ${response.status}`);
+        const productsResponse = await fetch(
+          `${API_URL}/products/my-supplier-products`,
+          {
+            method: "GET",
+            headers: getDefaultHeaders(),
+            credentials: "include"
+          }
+        );
+        if (!productsResponse.ok) {
+          throw new Error(`Erreur HTTP: ${productsResponse.status}`);
         }
-
-        const data = await response.json();
-        console.log("Produits récupérés Oui :", data.products);
-
-        setProducts(data.products);
+        const data = await productsResponse.json();
+        const products = Array.isArray(data.products) ? data.products : [];
+        console.log("Produits du fournisseur récupérés:", products);
+        setProducts(products);
       } catch (err) {
         console.error("Erreur lors de la récupération des produits:", err);
         setError("Impossible de charger les produits");
