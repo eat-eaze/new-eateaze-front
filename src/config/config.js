@@ -5,7 +5,7 @@
 
 // URL de base de l'API avec valeur par défaut
 export const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:30001";
 
 // URL complète de l'API incluant le chemin /api
 export const API_URL = `${API_BASE_URL}/api`;
