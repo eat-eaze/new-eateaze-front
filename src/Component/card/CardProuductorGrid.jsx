@@ -57,6 +57,8 @@ function CardProuductorGrid() {
         // Trouver le supplier_id dans les liens fournisseur
         if (userData.supplierLinks && userData.supplierLinks.length > 0) {
           console.log("userData.supplierLinks", userData.supplierLinks);
+          console.log("userData.supplierLinks 0 :", userData.supplierLinks[0]);
+          console.log("userData.supplierLinks[0].supplier_id", userData.supplierLinks[0].supplier_id);
           const supplierId = userData.supplierLinks[0].supplier_id;
           console.log("ID fournisseur récupéré:", supplierId);
           setSupplierId(supplierId);
