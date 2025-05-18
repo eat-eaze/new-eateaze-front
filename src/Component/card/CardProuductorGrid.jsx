@@ -97,6 +97,8 @@ function CardProuductorGrid() {
           throw new Error(`Erreur HTTP: ${productsResponse.status}`);
         }
 
+        console.log("productsResponse : ", productsResponse);
+
         const productsData = productsResponse.data;
         console.log("Produits du fournisseur récupérés:", productsData);
         setProducts(productsData || []);
