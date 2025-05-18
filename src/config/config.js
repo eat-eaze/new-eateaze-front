@@ -8,7 +8,7 @@ export const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "https://api.tousalaferme.theo-stoffelbach.fr";
 
 // URL complète de l'API incluant le chemin /api
-export const API_URL = `${API_BASE_URL}/api`;
+export const API_URL = `${API_BASE_URL}`;
 
 // Autres constantes globales peuvent être ajoutées ici
 export const IS_PRODUCTION = process.env.NODE_ENV === "production";
