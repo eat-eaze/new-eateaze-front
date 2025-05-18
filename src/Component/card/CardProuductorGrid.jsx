@@ -4,9 +4,9 @@ import CardProductView from "./CardProductView";
 import "../../style/component/card/cardProductorGrid.sass";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/config";
-import axios from "axios";
 import Cookies from "js-cookie";
-
+import { getDefaultHeaders } from "../../utils/authUtils";
+  
 function CardProuductorGrid() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -29,12 +29,16 @@ function CardProuductorGrid() {
         }
 
         // Appel à l'API pour récupérer le profil utilisateur
-        const profileResponse = await axios.get(`${API_URL}/users/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            withCredentials: true,
-          },
+        const response = await fetch(`${API_URL}/users/profile`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
         });
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const profileResponse = await response.json();
 
         const userData = profileResponse.data.user;
         console.log("Profil utilisateur récupéré:", userData);
@@ -76,15 +80,17 @@ function CardProuductorGrid() {
         const token = Cookies.get("token");
 
         // Appel à l'API pour récupérer les produits du fournisseur
-        const productsResponse = await axios.get(
+        const productsResponse = await fetch(
           `${API_URL}/products/my-supplier-products`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              withCredentials: true,
-            },
+            method: "GET",
+            headers: getDefaultHeaders(),
+            credentials: "include"
           }
         );
+        if (!productsResponse.ok) {
+          throw new Error(`Erreur HTTP: ${productsResponse.status}`);
+        }
 
         const productsData = productsResponse.data;
         console.log("Produits du fournisseur récupérés:", productsData);
