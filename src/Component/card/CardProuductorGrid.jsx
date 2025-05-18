@@ -99,7 +99,7 @@ function CardProuductorGrid() {
 
         console.log("productsResponse : ", productsResponse);
 
-        const productsData = productsResponse.data;
+        const productsData = await productsResponse.json();
         console.log("Produits du fournisseur récupérés:", productsData);
         setProducts(productsData || []);
       } catch (error) {
