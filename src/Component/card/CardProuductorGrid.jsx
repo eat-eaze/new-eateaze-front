@@ -96,7 +96,7 @@ function CardProuductorGrid() {
 
         const productsData = productsResponse.data;
         console.log("Produits du fournisseur récupérés:", productsData);
-        setProducts(productsData);
+        setProducts(productsData || []);
       } catch (error) {
         console.error("Erreur lors de la récupération des produits:", error);
         setError(`Impossible de charger les produits: ${error.message}`);
