@@ -38,13 +38,13 @@ function CardProuductorGrid() {
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
-        console.log("response", response);
 
         const profileResponse = await response.json();
+        console.log("Réponse complète du profil:", profileResponse);
 
-        console.log("profileResponse", profileResponse.data);
+        // Adapter selon la structure réelle
+        const userData = profileResponse.user || profileResponse;
 
-        const userData = profileResponse.data.user;
         console.log("Profil utilisateur récupéré:", userData);
 
         // Vérifier si l'utilisateur est un fournisseur
