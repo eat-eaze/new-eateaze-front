@@ -83,7 +83,7 @@ function CardProuductorGrid() {
       try {
         // Appel à l'API pour récupérer les produits du fournisseur
         const productsResponse = await fetch(
-          `${API_URL}/products/my-supplier-products`,
+          `${API_URL}/products/supplier/${supplierId}`,
           {
             method: "GET",
             headers: getDefaultHeaders(),
