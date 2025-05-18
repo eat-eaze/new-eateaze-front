@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../../style/component/modal/modalCart.sass";
 import { useCartStore } from "../../store/cartStore";
 import { FaShoppingCart } from "react-icons/fa";
-import { API_URL } from "../../config/config";
+import { API_URL, getDefaultHeaders } from "../../config/config";
 
 // Fonction pour générer des images de chat uniques
 const getUniqueImageUrl = () => {
@@ -32,11 +32,13 @@ function ModalCart() {
       setLoading(true);
       try {
         // Récupérer TOUS les produits
-        const response = await fetch(`${API_URL}/products`);
-        let products = await response.json();
-        products = products.products;
-        console.log("Tous les produits récupérés:", products);
-
+        const response = await fetch(`${API_URL}/products`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
+        const data = await response.json();
+        const products = Array.isArray(data.products) ? data.products : [];
         setAllProducts(products);
 
         // Vérifier si des produits du panier n'existent plus et les supprimer
@@ -88,6 +90,7 @@ function ModalCart() {
         setStockErrors(errors);
       } catch (error) {
         console.error("Erreur lors de la récupération des produits:", error);
+        setAllProducts([]);
       } finally {
         setLoading(false);
       }
@@ -101,7 +104,11 @@ function ModalCart() {
     const fetchUserProfile = async () => {
       setLoadingProfile(true);
       try {
-        const response = await fetch(`${API_URL}/user/profile`);
+        const response = await fetch(`${API_URL}/user/profile`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération du profil");
         }
@@ -126,7 +133,9 @@ function ModalCart() {
   // Étape 3: Fusionner les données du panier avec les détails des produits
   const cartWithDetails = cart.map((cartItem) => {
     // Trouver le produit correspondant dans tous les produits
-    const productDetails = allProducts.find((p) => p.id === cartItem.id) || {};
+    const productDetails = Array.isArray(allProducts)
+      ? allProducts.find((p) => p.id === cartItem.id) || {}
+      : {};
 
     console.log(`Produit ${cartItem.id}:`, {
       imageAPI: productDetails.image,
@@ -186,6 +195,7 @@ function ModalCart() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(orderData),
+        credentials: "include",
       });
 
       if (!response.ok) {

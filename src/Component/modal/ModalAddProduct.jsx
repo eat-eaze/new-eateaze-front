@@ -98,19 +98,31 @@ function ModalAddProduct() {
       setError("");
 
       try {
-        const categoriesResponse = await fetch(`${API_URL}/categories`);
+        const categoriesResponse = await fetch(`${API_URL}/categories`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
         if (!categoriesResponse.ok)
           throw new Error("Erreur lors du chargement des catégories");
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData.filter((cat) => cat.is_active));
 
-        const productTypesResponse = await fetch(`${API_URL}/product-types`);
+        const productTypesResponse = await fetch(`${API_URL}/product-types`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
         if (!productTypesResponse.ok)
           throw new Error("Erreur lors du chargement des types de produits");
         const productTypesData = await productTypesResponse.json();
         setProductTypes(productTypesData.filter((type) => type.is_active));
 
-        const varietiesResponse = await fetch(`${API_URL}/varieties`);
+        const varietiesResponse = await fetch(`${API_URL}/varieties`, {
+          method: "GET",
+          headers: getDefaultHeaders(),
+          credentials: "include"
+        });
         if (!varietiesResponse.ok)
           throw new Error("Erreur lors du chargement des variétés");
         const varietiesData = await varietiesResponse.json();

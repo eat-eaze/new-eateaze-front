@@ -50,6 +50,7 @@ function CardProductView({ product, onDelete }) {
       const response = await fetch(`${API_URL}/products/${id}`, {
         method: "DELETE",
         headers: getDefaultHeaders(),
+        credentials: "include"
       });
 
       if (!response.ok) {

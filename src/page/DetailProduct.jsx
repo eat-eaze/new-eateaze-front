@@ -25,6 +25,7 @@ function DetailProduct() {
               Accept: "application/json",
               "Content-Type": "application/json",
             },
+            credentials: "include",
           }
         );
 
@@ -51,6 +52,7 @@ function DetailProduct() {
                 Accept: "application/json",
                 "Content-Type": "application/json",
               },
+              credentials: "include",
             }
           );
 

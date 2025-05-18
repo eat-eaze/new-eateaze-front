@@ -24,6 +24,7 @@ function PaymentPage() {
           `${API_BASE_URL}/products/varieties/${varietyId}`,
           {
             headers: getDefaultHeaders(),
+            withCredentials: true
           }
         );
 

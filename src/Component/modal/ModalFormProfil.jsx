@@ -32,6 +32,7 @@ function ModalFormProfil() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
         });
 
         // Si 404, essayer avec 'me'
