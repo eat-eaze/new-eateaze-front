@@ -37,7 +37,9 @@ export const getDefaultHeaders = (includeAuth = true) => {
   };
 
   if (includeAuth) {
-    const token = localStorage.getItem("token");
+    // Récupérer le token depuis les cookies
+    const match = document.cookie.match(/(^|;\s*)token=([^;]*)/);
+    const token = match ? decodeURIComponent(match[2]) : null;
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
