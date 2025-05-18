@@ -125,7 +125,7 @@ function CardProuductorGrid() {
           >
             +
           </button>
-          {!loading && !error && products.length === 0 && (
+          {!loading && !error && products?.length === 0 && (
             <div className="no-products-message">
               Vous n'avez pas encore de produits. Cliquez sur "Ajouter un
               produit" pour commencer.
