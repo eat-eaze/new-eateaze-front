@@ -77,11 +77,13 @@ function CardProuductorGrid() {
   // Récupérer les produits du fournisseur
   useEffect(() => {
     const fetchSupplierProducts = async () => {
+      console.log("supplierId pas de prod ? : ", supplierId);
       if (!supplierId) return; // Ne pas continuer si on n'a pas l'ID du fournisseur
-
+      
       setLoading(true);
       try {
-        console.log("supplierId", supplierId);
+
+        console.log("supplierId : ", supplierId);
         // Appel à l'API pour récupérer les produits du fournisseur
         const productsResponse = await fetch(
           `${API_URL}/products/supplier/${supplierId}`,
