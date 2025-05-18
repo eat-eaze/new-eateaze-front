@@ -37,8 +37,11 @@ function CardProuductorGrid() {
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
-
+        console.log("response", response);
+        
         const profileResponse = await response.json();
+
+        console.log("profileResponse", profileResponse.data);
 
         const userData = profileResponse.data.user;
         console.log("Profil utilisateur récupéré:", userData);
@@ -52,6 +55,7 @@ function CardProuductorGrid() {
 
         // Trouver le supplier_id dans les liens fournisseur
         if (userData.supplierLinks && userData.supplierLinks.length > 0) {
+          console.log("userData.supplierLinks", userData.supplierLinks);
           const supplierId = userData.supplierLinks[0].supplier_id;
           console.log("ID fournisseur récupéré:", supplierId);
           setSupplierId(supplierId);
